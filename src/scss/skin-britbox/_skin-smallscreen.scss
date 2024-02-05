@@ -2,6 +2,55 @@
 @import "mixins";
 
 .#{$prefix}-britbox {
+  .#{$prefix}-britbox-controls {
+    display: flex;
+    justify-content: center;
+    top: 50%;
+    position: absolute;
+    width: 100%;
+    transform: translateY(-50%);
+    transition: opacity 0.3s;
+    &.#{$prefix}-hidden {
+      opacity: 0;
+    }
+    button {
+      border: 0;
+      width: 4.8em;
+      height: 4.8em;
+      background-size: cover;
+      background-color: transparent;
+      > span {
+        display: none;
+      }
+      &:active,
+      &:focus {
+        outline: none;
+      }
+    }
+    .#{$prefix}-ui-rewind {
+      background-image: url("../../assets/skin-britbox/images/back-10-sec.svg");
+
+      &.#{$prefix}-disabled {
+        display: none;
+      }
+    }
+    .#{$prefix}-ui-forward {
+      background-image: url("../../assets/skin-britbox/images/next-10-sec.svg");
+
+      &.#{$prefix}-disabled {
+        display: none;
+      }
+    }
+    .#{$prefix}-ui-play {
+      margin: 0 70px;
+      &.#{$prefix}-on {
+        background-image: url("../../assets/skin-britbox/images/pause.svg");
+      }
+      &.#{$prefix}-off {
+        background-image: url("../../assets/skin-britbox/images/play.svg");
+      }
+    }
+  }
   .#{$prefix}-ui-titlebar {
     .#{$prefix}-ui-customclosetogglebutton {
       background-image: url("../../assets/skin-britbox/images/arrow-back-browser.svg");
@@ -24,11 +73,17 @@
     > .#{$prefix}-container-wrapper {
       .#{$prefix}-ui-title {
         flex: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 8px;
         > .#{$prefix}-container-wrapper {
           flex-direction: column;
           span {
             display: block;
             text-align: center;
+            font-family: MuseoSans-300, sans-serif;
+            font-size: 18px;
           }
         }
       }
@@ -39,13 +94,85 @@
           justify-content: flex-end;
         }
         &.left {
-          align-items: center;
           display: flex;
           > .#{$prefix}-container-wrapper {
             justify-content: flex-start;
           }
         }
       }
+    }
+  }
+
+  .#{$prefix}-ui-seekbar {
+    transition: all 300ms ease-in-out;
+
+    &:focus {
+      box-shadow: none;
+    }
+    &.#{$prefix}-disabled {
+      display: none;
+    }
+    .#{$prefix}-seekbar {
+      .#{$prefix}-seekbar-playbackposition-marker {
+        width: 20px;
+        height: 20px;
+        border: 0;
+        background-color: #04c3fc;
+      }
+
+      .#{$prefix}-seekbar-markers {
+        height: 4px;
+      }
+
+      .#{$prefix}-seekbar-seekposition {
+        height: 4px;
+      }
+
+      .#{$prefix}-seekbar-backdrop {
+        height: 4px;
+        transition: all 150ms ease-in-out;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .#{$prefix}-seekbar-bufferlevel {
+        height: 4px;
+        transition: all 150ms ease-in-out;
+      }
+
+      .#{$prefix}-seekbar-playbackposition {
+        height: 4px;
+        transition: all 150ms ease-in-out;
+        background-color: #04c3fc;
+      }
+    }
+
+    &:hover {
+      .#{$prefix}-seekbar {
+        .#{$prefix}-seekbar-playbackposition {
+          background-color: #04c3fc;
+        }
+      }
+    }
+  }
+
+  .#{$prefix}-ui-playbacktimelabel {
+    @extend %ui-label;
+    font-family: MuseoSans-500, sans-serif;
+
+    text-transform: uppercase;
+
+    &.#{$prefix}-ui-playbacktimelabel-live {
+      background-image: url("../../assets/skin-britbox/images/live.svg");
+      background-color: $color-secondary;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 6.5rem;
+      height: 1.25rem;
+      border-radius: 1px;
+    }
+
+    &.#{$prefix}-ui-playbacktimelabel-live-edge {
+      background-color: $color-red;
     }
   }
 }

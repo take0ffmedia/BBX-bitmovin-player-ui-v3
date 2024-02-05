@@ -41,6 +41,11 @@ import { AdClickOverlay } from "./components/adclickoverlay";
 import { AdMessageLabel } from "./components/admessagelabel";
 import { AdSkipButton } from "./components/adskipbutton";
 import { CloseButton } from "./components/closebutton";
+import { Controls } from "./components/controls";
+import { PlayButton } from "./components/playbutton";
+import { RewindButton } from "./components/rewind";
+import { ForwardButton } from "./components/forward";
+
 import {
   MetadataLabel,
   MetadataLabelContent,
@@ -440,10 +445,10 @@ export namespace UIFactory {
           components: [
             new PlaybackTimeLabel({
               timeLabelMode: PlaybackTimeLabelMode.CurrentTime,
-              hideInLivePlayback: true,
             }),
             new SeekBar({ label: new SeekBarLabel() }),
             new PlaybackTimeLabel({
+              hideInLivePlayback: true,
               timeLabelMode: PlaybackTimeLabelMode.TotalTime,
               cssClasses: ["text-right"],
             }),
@@ -457,8 +462,15 @@ export namespace UIFactory {
       components: [
         subtitleOverlay,
         new BufferingOverlay(),
-        new PlaybackToggleOverlay(),
         controlBar,
+        new Controls({
+          components: [
+            new RewindButton(),
+            new PlayButton(),
+            new ForwardButton(),
+          ],
+          cssClass: "britbox-controls",
+        }),
         new TitleBar({
           components: [
             new Container({
