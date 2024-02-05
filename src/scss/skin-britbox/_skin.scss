@@ -45,3 +45,65 @@
 @import "components/audiotracksettingspaneltogglebutton";
 
 @import "skin-smallscreen";
+
+@font-face {
+  font-family: MuseoSans-100;
+  src: url($fonts + "/MuseoSans-100.eot?#iefix") format("embedded-opentype"),
+    url($fonts + "/MuseoSans-100.woff2") format("woff2"),
+    url($fonts + "/MuseoSans-100.woff") format("woff"),
+    url($fonts + "/MuseoSans-100.ttf") format("truetype"),
+    url($fonts + "/MuseoSans-100.svg#MuseoSans-100") format("svg");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: MuseoSans-300;
+  src: url($fonts + "/MuseoSans-300.eot?#iefix") format("embedded-opentype"),
+    url($fonts + "/MuseoSans-300.woff2") format("woff2"),
+    url($fonts + "/MuseoSans-300.woff") format("woff"),
+    url($fonts + "/MuseoSans-300.ttf") format("truetype"),
+    url($fonts + "/MuseoSans-300.svg#MuseoSans-300") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: MuseoSans-500;
+  src: url($fonts + "/MuseoSans-500.eot?#iefix") format("embedded-opentype"),
+    url($fonts + "/MuseoSans-500.woff2") format("woff2"),
+    url($fonts + "/MuseoSans-500.woff") format("woff"),
+    url($fonts + "/MuseoSans-500.ttf") format("truetype"),
+    url($fonts + "/MuseoSans-500.svg#MuseoSans-500") format("svg");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: MuseoSans-700;
+  src: url($fonts + "/MuseoSans-700.eot?#iefix") format("embedded-opentype"),
+    url($fonts + "/MuseoSans-700.woff2") format("woff2"),
+    url($fonts + "/MuseoSans-700.woff") format("woff"),
+    url($fonts + "/MuseoSans-700.ttf") format("truetype"),
+    url($fonts + "/MuseoSans-700.svg#MuseoSans-700") format("svg");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: MuseoSans-900;
+  src: url($fonts + "/MuseoSans-900.eot?#iefix") format("embedded-opentype"),
+    url($fonts + "/MuseoSans-900.woff2") format("woff2"),
+    url($fonts + "/MuseoSans-900.woff") format("woff"),
+    url($fonts + "/MuseoSans-900.ttf") format("truetype"),
+    url($fonts + "/MuseoSans-900.svg#MuseoSans-900") format("svg");
+  font-weight: 100;
+  font-style: normal;
+}
+
+.#{$prefix}-ui-uicontainer {
+  color: $color-primary;
+  font-family: $font-family;
+  font-size: $font-size;
+  user-select: none;
+}

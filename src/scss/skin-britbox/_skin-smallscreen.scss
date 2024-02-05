@@ -3,6 +3,24 @@
 
 .#{$prefix}-britbox {
   .#{$prefix}-ui-titlebar {
+    .#{$prefix}-ui-customclosetogglebutton {
+      background-image: url("../../assets/skin-britbox/images/arrow-back-browser.svg");
+      background-color: transparent;
+      border: none;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 40px;
+      height: 40px;
+      background-size: 25px;
+      outline: none;
+      transition: opacity 0.1s;
+      &:active {
+        opacity: 0.3;
+      }
+      .#{$prefix}-label {
+        display: none;
+      }
+    }
     > .#{$prefix}-container-wrapper {
       .#{$prefix}-ui-title {
         flex: auto;
@@ -19,6 +37,13 @@
         > .#{$prefix}-container-wrapper {
           display: flex;
           justify-content: flex-end;
+        }
+        &.left {
+          align-items: center;
+          display: flex;
+          > .#{$prefix}-container-wrapper {
+            justify-content: flex-start;
+          }
         }
       }
     }

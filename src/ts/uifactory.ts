@@ -12,6 +12,7 @@ import { SubtitleSettingsLabel } from "./components/subtitlesettings/subtitleset
 import { SubtitleSelectBox } from "./components/subtitleselectbox";
 import { ControlBar } from "./components/controlbar";
 import { Container } from "./components/container";
+import { CustomCloseButton } from "./components/customclosebutton";
 import {
   PlaybackTimeLabel,
   PlaybackTimeLabelMode,
@@ -456,15 +457,13 @@ export namespace UIFactory {
       components: [
         subtitleOverlay,
         new BufferingOverlay(),
-        // new CastStatusOverlay(),
         new PlaybackToggleOverlay(),
-        // new RecommendationOverlay(),
         controlBar,
         new TitleBar({
           components: [
             new Container({
-              components: [],
-              cssClass: "ui-actions",
+              components: [new CustomCloseButton()],
+              cssClass: "ui-actions left",
             }),
             new Container({
               components: [
@@ -485,33 +484,11 @@ export namespace UIFactory {
             }),
           ],
         }),
-        // new TitleBar({
-        //   components: [
-        //     new Container({
-        //       components: [
-        //         new MetadataLabel({ content: MetadataLabelContent.Title }),
-        //         subtitleToggleButton,
-        //         audioToggleButton,
-        //       ],
-        //       cssClasses: ["ui-titlebar-top"],
-        //     }),
-        //     new Container({
-        //       components: [
-        //         new MetadataLabel({
-        //           content: MetadataLabelContent.Description,
-        //         }),
-        //         subtitleListPanel,
-        //         audioTrackListPanel,
-        //       ],
-        //       cssClasses: ["ui-titlebar-bottom"],
-        //     }),
-        //   ],
-        // }),
         settingsPanel,
         new ErrorMessageOverlay(),
       ],
       cssClasses: ["ui-skin-smallscreen", "britbox"],
-      hideDelay: -1,
+      hideDelay: 2000,
       hidePlayerStateExceptions: [
         PlayerUtils.PlayerState.Prepared,
         PlayerUtils.PlayerState.Paused,
