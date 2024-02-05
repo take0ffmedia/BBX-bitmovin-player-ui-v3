@@ -1,0 +1,26 @@
+@import "variables";
+@import "mixins";
+
+.#{$prefix}-britbox {
+  .#{$prefix}-ui-titlebar {
+    > .#{$prefix}-container-wrapper {
+      .#{$prefix}-ui-title {
+        flex: auto;
+        > .#{$prefix}-container-wrapper {
+          flex-direction: column;
+          span {
+            display: block;
+            text-align: center;
+          }
+        }
+      }
+      .#{$prefix}-ui-actions {
+        flex: 2;
+        > .#{$prefix}-container-wrapper {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+}
