@@ -43,8 +43,10 @@
 @import "components/subtitlesettings/subtitlesettings";
 @import "components/subtitlesettingspaneltogglebutton";
 @import "components/audiotracksettingspaneltogglebutton";
-
+@import "skin-ads";
+@import "skin-cast-receiver";
 @import "skin-smallscreen";
+@import "skin-tv";
 
 @font-face {
   font-family: MuseoSans-100;

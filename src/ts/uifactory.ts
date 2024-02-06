@@ -45,7 +45,8 @@ import { Controls } from "./components/controls";
 import { PlayButton } from "./components/playbutton";
 import { RewindButton } from "./components/rewind";
 import { ForwardButton } from "./components/forward";
-
+import { ChromecastButton } from "./components/chromecastbutton";
+import { NextEpisodeButton } from "./components/nextepisodebutton";
 import {
   MetadataLabel,
   MetadataLabelContent,
@@ -455,6 +456,13 @@ export namespace UIFactory {
           ],
           cssClasses: ["controlbar-top"],
         }),
+        new Container({
+          components: [
+            new SettingsToggleButton({ settingsPanel: settingsPanel }),
+            new NextEpisodeButton(),
+          ],
+          cssClass: "britbox-container-bottom",
+        }),
       ],
     });
 
@@ -488,9 +496,9 @@ export namespace UIFactory {
             }),
             new Container({
               components: [
-                new CastToggleButton(),
                 new AirPlayToggleButton(),
-                new SettingsToggleButton({ settingsPanel: settingsPanel }),
+                new CastToggleButton(),
+                new ChromecastButton(),
               ],
               cssClass: "ui-actions",
             }),

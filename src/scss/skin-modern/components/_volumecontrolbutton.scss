@@ -1,5 +1,5 @@
-@import '../variables';
-@import '../mixins';
+@import "../variables";
+@import "../mixins";
 
 .#{$prefix}-ui-volumecontrolbutton {
   @extend %ui-container;
@@ -8,7 +8,7 @@
   position: relative;
 
   .#{$prefix}-ui-volumeslider {
-    @include animate-slide-in-from-bottom(6em, $animation-duration-short);
+    // @include animate-slide-in-from-bottom(6em, $animation-duration-short);
 
     background-color: $color-background;
     bottom: 100%;
@@ -17,13 +17,13 @@
     width: 1.5em;
 
     .#{$prefix}-seekbar {
-      bottom: .5em;
+      bottom: 0.5em;
       height: auto;
-      left: .3em;
+      left: 0.3em;
       overflow: hidden;
       position: absolute;
-      right: .3em;
-      top: .5em;
+      right: 0.3em;
+      top: 0.5em;
       width: auto;
     }
   }

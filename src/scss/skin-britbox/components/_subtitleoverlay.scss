@@ -1,5 +1,5 @@
-@import '../variables';
-@import '../mixins';
+@import "../variables";
+@import "../mixins";
 
 .#{$prefix}-ui-uicontainer {
   .#{$prefix}-ui-subtitle-overlay {
@@ -56,7 +56,7 @@
       // Break labels into separate lines
       // sass-lint:disable force-pseudo-nesting
       &:nth-child(1n-1)::after {
-        content: '\A';
+        content: "\A";
         // VTT flex styling can increase this elements height, making the background larger
         height: 0;
         white-space: pre-line;

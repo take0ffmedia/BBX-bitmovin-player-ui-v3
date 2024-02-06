@@ -1,7 +1,41 @@
 @import "variables";
 @import "mixins";
 
+.bounceInRight {
+  transform: translateY(0);
+}
+
+.fade-in-out {
+  opacity: 1;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
 .#{$prefix}-britbox {
+  .#{$prefix}-ui-chromecast {
+    @extend %ui-button;
+
+    background-image: url("../../assets/skin-britbox/images/chromecast.svg");
+
+    &.#{$prefix}-disabled {
+      display: none;
+    }
+
+    &:hover {
+      @include svg-icon-shadow;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &.#{$prefix}-on {
+      background-image: url("../../assets/skin-modern/images/chromecastX.svg");
+    }
+  }
   .#{$prefix}-britbox-controls {
     display: flex;
     justify-content: center;
@@ -71,6 +105,7 @@
       }
     }
     > .#{$prefix}-container-wrapper {
+      display: flex;
       .#{$prefix}-ui-title {
         flex: auto;
         display: flex;
@@ -173,6 +208,426 @@
 
     &.#{$prefix}-ui-playbacktimelabel-live-edge {
       background-color: $color-red;
+    }
+  }
+
+  .#{$prefix}-britbox-container-bottom {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .#{$prefix}-britbox-container-bottom {
+    .#{$prefix}-ui-nextepisode {
+      margin-left: 2%;
+      border: none;
+      background-image: url("../../assets/skin-britbox/images/next-episode.svg");
+      background-color: transparent;
+      background-size: 14px;
+      background-repeat: no-repeat;
+      background-position: left center;
+      white-space: nowrap;
+
+      &.#{$prefix}-disabled {
+        display: none;
+      }
+
+      span {
+        margin-left: 12px;
+        font-size: 14px;
+        font-family: MuseoSans-300, sans-serif;
+        color: #fff;
+      }
+    }
+    .#{$prefix}-container-wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .#{$prefix}-container-wrapper {
+      display: flex;
+      justify-content: center;
+
+      button {
+        align-items: center;
+        &.hidden {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .#{$prefix}-ui-settings-panel {
+    @include layout-cover;
+    @include layout-center-children-in-container;
+    background-color: #00202b;
+    z-index: 2;
+
+    .#{$prefix}-ui-label {
+      font-family: MuseoSans-700, sans-serif;
+      color: #e8edf2;
+    }
+
+    .#{$prefix}-ui-settings-panel-page {
+      padding: unquote("max(2.0em, env(safe-area-inset-top)) 0");
+
+      &.#{$prefix}-active {
+        > .#{$prefix}-container-wrapper {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-around;
+
+          .#{$prefix}-hidden {
+            display: none;
+          }
+        }
+      }
+    }
+
+    display: flex;
+
+    > .#{$prefix}-container-wrapper {
+      margin: auto;
+      width: 100%;
+
+      .#{$prefix}-ui-closebutton {
+        border: none;
+        position: absolute;
+        top: unquote("max(2.0em, env(safe-area-inset-top))");
+        right: unquote("max(2.0em, env(safe-area-inset-top))");
+        width: 40px;
+        height: 40px;
+
+        span {
+          display: none;
+        }
+
+        &:active,
+        &:focus {
+          border: none;
+          box-shadow: none;
+        }
+      }
+    }
+
+    .#{$prefix}-ui-settingspanelpageopenbutton {
+      display: none;
+    }
+
+    .#{$prefix}-hide {
+      opacity: 0;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+    }
+
+    .#{$prefix}-ui-settings-panel-item {
+      text-align: left;
+      border-bottom: none;
+    }
+
+    .#{$prefix}-ui-label {
+      font-size: 22px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .#{$prefix}-ui-list {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      button {
+        margin: 10px 0;
+        padding: 0;
+        background: transparent;
+        border: 0;
+        color: #e8edf2;
+        outline: none;
+
+        span {
+          display: flex;
+          align-items: center;
+          margin-right: 10px;
+          text-transform: capitalize;
+          &:before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+          }
+        }
+
+        &.#{$prefix}-selected {
+          opacity: 1;
+
+          span {
+            color: #00b6e6;
+          }
+
+          span:before {
+            background-color: transparent;
+            background-origin: content-box;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 24px 20px;
+            background-image: url("../../assets/skin-britbox/images/check.svg");
+          }
+        }
+        &[aria-label="Off"] {
+          order: 0;
+        }
+        &[aria-label="On"] {
+          display: none;
+        }
+        &[id="en-US"] {
+          order: 1;
+        }
+        &[id="en-GB"] {
+          order: 2;
+        }
+        &[id="da-DK"] {
+          order: 3;
+        }
+        &[id="nb-NO"] {
+          order: 4;
+        }
+        &[id="fi-FI"] {
+          order: 5;
+        }
+        &[id="sv-SE"] {
+          order: 6;
+        }
+        &[aria-label="english"] {
+          order: 1;
+        }
+        &[aria-label="dansk"] {
+          order: 2;
+        }
+        &[aria-label="norsk bokmål"] {
+          order: 3;
+        }
+        &[aria-label="norsk"] {
+          order: 3;
+        }
+        &[aria-label="suomi"] {
+          order: 4;
+        }
+        &[aria-label="svenska"] {
+          order: 5;
+        }
+
+        &:nth-child(1) {
+          font-size: 20px;
+        }
+        &:nth-child(2) {
+          font-size: 23px;
+        }
+        &:nth-child(3) {
+          font-size: 26px;
+        }
+      }
+
+      &.right {
+        overflow-y: auto;
+        max-height: fill-available;
+        padding-bottom: 50px;
+
+        button {
+          font-size: 20px;
+          &:nth-child(1) {
+            font-size: 20px;
+          }
+          &:nth-child(2) {
+            font-size: 20px;
+          }
+          &:nth-child(3) {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .#{$prefix}-ui-buffering-overlay {
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .#{$prefix}-container-wrapper {
+      .#{$prefix}-ui-buffering-overlay-loading {
+        background-image: url("../../assets/skin-britbox/images/loading.svg");
+        background-repeat: no-repeat;
+        background-size: 64px;
+        background-color: #000000;
+        height: 64px;
+        width: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+    }
+
+    ~ .#{$prefix}-ui-playbacktoggle-overlay .#{$prefix}-image {
+      display: none;
+    }
+    &.#{$prefix}-hidden ~ .#{$prefix}-ui-playbacktoggle-overlay {
+      .#{$prefix}-image {
+        display: block;
+      }
+    }
+  }
+
+  .#{$prefix}-advisory {
+    position: absolute;
+    top: unquote("max(2.0em, env(safe-area-inset-top))");
+    left: unquote("max(2.0em, env(safe-area-inset-left))");
+    padding: 0.5em 1em 1em;
+    z-index: 1;
+    padding: 0;
+    transition: all 300ms ease-in-out;
+    @extend .fade-in-out;
+    @extend .animated;
+
+    .#{$prefix}-container-wrapper {
+      flex-direction: column;
+    }
+    .#{$prefix}-label-metadata-classification {
+      color: #fff;
+      font-family: MuseoSans-500, sans-serif;
+      font-size: 20px;
+      line-height: 22px;
+      border-left: 4px solid #4ba0b8;
+      padding-left: 10px;
+    }
+
+    .#{$prefix}-not-rated-or-description {
+      border-left: none;
+    }
+
+    .#{$prefix}-label-metadata-description {
+      color: #fff;
+      font-size: 16px;
+      font-family: MuseoSans-500, sans-serif;
+
+      display: block;
+      &:not(:empty) {
+        margin-top: 10px;
+      }
+    }
+
+    &.#{$prefix}-hidden {
+      opacity: 0;
+    }
+  }
+
+  &.#{$prefix}-controls-shown {
+    .#{$prefix}-advisory {
+      display: none;
+    }
+  }
+
+  .#{$prefix}-ui-seekbar {
+    transition: all 300ms ease-in-out;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    .#{$prefix}-seekbar {
+      .#{$prefix}-seekbar-playbackposition-marker {
+        width: 20px;
+        height: 20px;
+        border: 0;
+        background-color: #04c3fc;
+      }
+
+      .#{$prefix}-seekbar-markers {
+        height: 4px;
+      }
+
+      .#{$prefix}-seekbar-seekposition {
+        height: 4px;
+      }
+
+      .#{$prefix}-seekbar-backdrop {
+        height: 4px;
+        transition: all 150ms ease-in-out;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .#{$prefix}-seekbar-bufferlevel {
+        height: 4px;
+        transition: all 150ms ease-in-out;
+      }
+
+      .#{$prefix}-seekbar-playbackposition {
+        height: 4px;
+        transition: all 150ms ease-in-out;
+        background-color: #04c3fc;
+      }
+    }
+
+    &:hover {
+      .#{$prefix}-seekbar {
+        .#{$prefix}-seekbar-playbackposition {
+          background-color: #04c3fc;
+        }
+      }
+    }
+  }
+
+  .#{$prefix}-ui-settingstogglebutton {
+    background-position: left;
+    background-image: url("../../assets/skin-britbox/images/configuration.svg");
+
+    &.#{$prefix}-disabled {
+      display: none;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    .#{$prefix}-label {
+      display: block;
+      margin-left: 35px;
+      font-size: 14px;
+
+      &.#{$prefix}-disabled {
+        display: none;
+      }
+    }
+  }
+
+  &.#{$prefix}-ui-uicontainer {
+    .#{$prefix}-ui-buffering-overlay {
+      ~ .#{$prefix}-britbox-controls {
+        display: none;
+      }
+      &.#{$prefix}-hidden ~ .#{$prefix}-britbox-controls {
+        display: flex;
+      }
+    }
+    &.#{$prefix}-player-state-finished {
+      .#{$prefix}-ui-buffering-overlay {
+        ~ .#{$prefix}-britbox-controls {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &.#{$prefix}-controls-hidden {
+    .#{$prefix}-ui-playbacktoggle-overlay {
+      .#{$prefix}-ui-hugeplaybacktogglebutton {
+        .#{$prefix}-image {
+          opacity: 0;
+        }
+      }
     }
   }
 }
