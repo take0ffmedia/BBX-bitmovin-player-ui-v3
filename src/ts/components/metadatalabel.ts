@@ -1,5 +1,5 @@
-import {LabelConfig, Label} from './label';
-import {UIInstanceManager} from '../uimanager';
+import { LabelConfig, Label } from './label';
+import { UIInstanceManager } from '../uimanager';
 import { PlayerAPI } from 'bitmovin-player';
 
 /**
@@ -30,13 +30,19 @@ export interface MetadataLabelConfig extends LabelConfig {
  * A label that can be configured to display certain metadata.
  */
 export class MetadataLabel extends Label<MetadataLabelConfig> {
-
   constructor(config: MetadataLabelConfig) {
     super(config);
 
-    this.config = this.mergeConfig(config, {
-      cssClasses: ['label-metadata', 'label-metadata-' + MetadataLabelContent[config.content].toLowerCase()],
-    } as MetadataLabelConfig, this.config);
+    this.config = this.mergeConfig(
+      config,
+      {
+        cssClasses: [
+          'label-metadata',
+          'label-metadata-' + MetadataLabelContent[config.content].toLowerCase(),
+        ],
+      } as MetadataLabelConfig,
+      this.config,
+    );
   }
 
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {
@@ -46,12 +52,15 @@ export class MetadataLabel extends Label<MetadataLabelConfig> {
     let uiconfig = uimanager.getConfig();
 
     let init = () => {
+      let metadata = player.getSource()?.metadata;
       switch (config.content) {
         case MetadataLabelContent.Title:
           this.setText(uiconfig.metadata.title);
           break;
         case MetadataLabelContent.Description:
-          this.setText(uiconfig.metadata.description);
+          if (metadata?.description) {
+            this.setText(metadata.description);
+          }
           break;
       }
     };
