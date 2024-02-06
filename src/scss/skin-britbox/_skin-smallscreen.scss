@@ -349,6 +349,7 @@
           align-items: center;
           margin-right: 10px;
           text-transform: capitalize;
+          font-family: MuseoSans-500;
           &:before {
             content: "";
             display: inline-block;
@@ -377,7 +378,13 @@
         &[aria-label="Off"] {
           order: 0;
         }
+        &[aria-label="off"] {
+          order: 0;
+        }
         &[aria-label="On"] {
+          display: none;
+        }
+        &[aria-label="on"] {
           display: none;
         }
         &[id="en-US"] {

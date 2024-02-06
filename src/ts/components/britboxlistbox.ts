@@ -1,9 +1,9 @@
-import { ToggleButton, ToggleButtonConfig } from "./togglebutton";
-import { ListItem, ListSelector, ListSelectorConfig } from "./listselector";
-import { DOM } from "../dom";
-import { PlayerAPI } from "bitmovin-player";
-import { UIInstanceManager } from "../uimanager";
-import { ArrayUtils } from "../arrayutils";
+import { ToggleButton, ToggleButtonConfig } from './togglebutton';
+import { ListItem, ListSelector, ListSelectorConfig } from './listselector';
+import { DOM } from '../dom';
+import { PlayerAPI } from 'bitmovin-player';
+import { UIInstanceManager } from '../uimanager';
+import { ArrayUtils } from '../arrayutils';
 
 /**
  * A element to select a single item out of a list of available items.
@@ -29,9 +29,9 @@ export class BritboxListBox extends ListSelector<ListSelectorConfig> {
     this.config = this.mergeConfig(
       config,
       {
-        cssClass: "ui-listbox",
+        cssClass: 'ui-listbox',
       } as ListSelectorConfig,
-      this.config
+      this.config,
     );
   }
 
@@ -45,7 +45,7 @@ export class BritboxListBox extends ListSelector<ListSelectorConfig> {
   }
 
   protected toDomElement(): DOM {
-    let listBoxElement = new DOM("div", {
+    let listBoxElement = new DOM('div', {
       id: this.config.id,
       class: this.getCssClasses(),
     });
@@ -104,9 +104,7 @@ export class BritboxListBox extends ListSelector<ListSelectorConfig> {
     for (let item of this.items) {
       const component = this.getComponentForKey(item.key);
       if (component) {
-        String(component.key) === String(this.selectedItem)
-          ? component.on()
-          : component.off();
+        String(component.key) === String(this.selectedItem) ? component.on() : component.off();
       }
     }
   };
@@ -143,11 +141,11 @@ class ListBoxItemButton extends ToggleButton<ListBoxItemButtonConfig> {
     this.config = this.mergeConfig(
       config,
       {
-        cssClass: "ui-listbox-button",
-        onClass: "selected",
-        offClass: "",
+        cssClass: 'ui-listbox-button',
+        onClass: 'selected',
+        offClass: '',
       } as ListBoxItemButtonConfig,
-      this.config
+      this.config,
     );
   }
 

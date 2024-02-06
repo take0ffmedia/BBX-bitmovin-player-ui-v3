@@ -1,7 +1,7 @@
-import { ContainerConfig, Container } from "./container";
-import { UIInstanceManager } from "../uimanager";
-import { Timeout } from "../timeout";
-import { PlayerAPI } from "bitmovin-player";
+import { ContainerConfig, Container } from './container';
+import { UIInstanceManager } from '../uimanager';
+import { Timeout } from '../timeout';
+import { PlayerAPI } from 'bitmovin-player';
 
 /**
  * Configuration interface for the {@link Advisory} component.
@@ -21,12 +21,12 @@ export class Advisory extends Container<AdvisoryConfig> {
     this.config = this.mergeConfig(
       config,
       <AdvisoryConfig>{
-        cssClass: "ui-advisory",
+        cssClass: 'ui-advisory',
         hidden: true,
         showDelayMs: 2500,
         hideDelayMs: 7500,
       },
-      this.config
+      this.config,
     );
   }
 

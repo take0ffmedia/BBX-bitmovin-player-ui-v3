@@ -1,7 +1,7 @@
-import { LabelConfig, Label } from "./label";
-import { UIInstanceManager } from "../uimanager";
-import { PlayerAPI, PlayerConfig } from "bitmovin-player";
-import { i18n } from "../localization/i18n";
+import { LabelConfig, Label } from './label';
+import { UIInstanceManager } from '../uimanager';
+import { PlayerAPI, PlayerConfig } from 'bitmovin-player';
+import { i18n } from '../localization/i18n';
 
 /**
  * Enumerates the types of content that the {@link MetadataAdvisory} can display.
@@ -49,41 +49,35 @@ export class MetadataAdvisory extends Label<MetadataAdvisoryConfig> {
       config,
       {
         cssClasses: [
-          "label-metadata",
-          "label-metadata-" +
-            MetadataAdvisoryContent[config.content].toLowerCase(),
+          'label-metadata',
+          'label-metadata-' + MetadataAdvisoryContent[config.content].toLowerCase(),
         ],
       } as MetadataAdvisoryConfig,
-      this.config
+      this.config,
     );
   }
 
   configure(player: CustomPlayerAPI, uimanager: UIInstanceManager): void {
     super.configure(player, uimanager);
-    let notRatedOrDescription = this.prefixCss("not-rated-or-description");
+    let notRatedOrDescription = this.prefixCss('not-rated-or-description');
 
     let config = this.getConfig();
 
     let init = () => {
       let advisory;
-      if (typeof player.getSource()?.metadata === "object") {
+      if (typeof player.getSource()?.metadata === 'object') {
         advisory = player.getSource()?.metadata;
-      } else if (typeof player.getSource()?.metadata === "string") {
-        advisory = JSON.parse(
-          player.getSource()?.metadata as unknown as string
-        ).NativeMap;
+      } else if (typeof player.getSource()?.metadata === 'string') {
+        advisory = JSON.parse(player.getSource()?.metadata as unknown as string).NativeMap;
       }
 
-      if (
-        advisory?.advisoryClassification?.length ||
-        advisory?.advisoryDescription?.length
-      ) {
+      if (advisory?.advisoryClassification?.length || advisory?.advisoryDescription?.length) {
         switch (config.content) {
           case MetadataAdvisoryContent.Classification:
             this.setText(
-              `${i18n.performLocalization(
-                i18n.getLocalizer("settings.rated")
-              )} ${advisory?.advisoryClassification}`
+              `${i18n.performLocalization(i18n.getLocalizer('settings.rated'))} ${
+                advisory?.advisoryClassification
+              }`,
             );
             break;
           case MetadataAdvisoryContent.Description:
@@ -97,7 +91,7 @@ export class MetadataAdvisory extends Label<MetadataAdvisoryConfig> {
     };
 
     let unload = () => {
-      this.setText("");
+      this.setText('');
     };
 
     // Init label

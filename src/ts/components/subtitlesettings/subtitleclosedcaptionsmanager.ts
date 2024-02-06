@@ -2,7 +2,7 @@ import { StorageUtils } from '../../storageutils';
 import { Component, ComponentConfig } from '../component';
 import { EventDispatcher, Event } from '../../eventdispatcher';
 
-interface SubtitleSettings {
+interface SubtitleClosedCaptions {
   fontColor?: string;
   fontOpacity?: string;
   fontFamily?: string;
@@ -15,29 +15,20 @@ interface SubtitleSettings {
 }
 
 interface Properties {
-  [name: string]: SubtitleSettingsProperty<string>;
+  [name: string]: SubtitleClosedCaptionsProperty<string>;
 }
 
-export class SubtitleSettingsManager {
-  private userSettings: SubtitleSettings;
+export class SubtitleClosedCaptionsManager {
+  private userSettings: SubtitleClosedCaptions;
   private localStorageKey: string;
 
   private _properties: Properties = {
-    fontColor: new SubtitleSettingsProperty<string>(this),
-    fontOpacity: new SubtitleSettingsProperty<string>(this),
-    fontFamily: new SubtitleSettingsProperty<string>(this),
-    fontSize: new SubtitleSettingsProperty<string>(this),
-    characterEdge: new SubtitleSettingsProperty<string>(this),
-    backgroundColor: new SubtitleSettingsProperty<string>(this),
-    backgroundOpacity: new SubtitleSettingsProperty<string>(this),
-    windowColor: new SubtitleSettingsProperty<string>(this),
-    windowOpacity: new SubtitleSettingsProperty<string>(this),
-    closedCaptions: new SubtitleSettingsProperty<string>(this),
+    closedCaptions: new SubtitleClosedCaptionsProperty<string>(this),
   };
 
   constructor() {
     this.userSettings = {};
-    this.localStorageKey = DummyComponent.instance().prefixCss('subtitlesettings');
+    this.localStorageKey = DummyComponent.instance().prefixCss('subtitleclosedcaptions');
 
     for (let propertyName in this._properties) {
       this._properties[propertyName].onChanged.subscribe((sender, property) => {
@@ -62,43 +53,7 @@ export class SubtitleSettingsManager {
     }
   }
 
-  public get fontColor(): SubtitleSettingsProperty<string> {
-    return this._properties.fontColor;
-  }
-
-  public get fontOpacity(): SubtitleSettingsProperty<string> {
-    return this._properties.fontOpacity;
-  }
-
-  public get fontFamily(): SubtitleSettingsProperty<string> {
-    return this._properties.fontFamily;
-  }
-
-  public get fontSize(): SubtitleSettingsProperty<string> {
-    return this._properties.fontSize;
-  }
-
-  public get characterEdge(): SubtitleSettingsProperty<string> {
-    return this._properties.characterEdge;
-  }
-
-  public get backgroundColor(): SubtitleSettingsProperty<string> {
-    return this._properties.backgroundColor;
-  }
-
-  public get backgroundOpacity(): SubtitleSettingsProperty<string> {
-    return this._properties.backgroundOpacity;
-  }
-
-  public get windowColor(): SubtitleSettingsProperty<string> {
-    return this._properties.windowColor;
-  }
-
-  public get windowOpacity(): SubtitleSettingsProperty<string> {
-    return this._properties.windowOpacity;
-  }
-
-  public get closedCaptions(): SubtitleSettingsProperty<string> {
+  public get closedCaptions(): SubtitleClosedCaptionsProperty<string> {
     return this._properties.closedCaptions;
   }
 
@@ -113,8 +68,7 @@ export class SubtitleSettingsManager {
    * Loads the settings from local storage
    */
   public load(): void {
-    this.userSettings = StorageUtils.getObject<SubtitleSettings>(this.localStorageKey) || {};
-
+    this.userSettings = StorageUtils.getObject<SubtitleClosedCaptions>(this.localStorageKey) || {};
     // Apply the loaded settings
     for (let property in this.userSettings) {
       this._properties[property].value = (<any>this.userSettings)[property];
@@ -124,7 +78,7 @@ export class SubtitleSettingsManager {
 
 /**
  * A dummy component whose sole purpose is to expose the {@link #prefixCss} method to the
- * {@link SubtitleSettingsManager}.
+ * {@link SubtitleClosedCaptionsManager}.
  */
 class DummyComponent extends Component<ComponentConfig> {
   private static _instance: DummyComponent;
@@ -142,14 +96,20 @@ class DummyComponent extends Component<ComponentConfig> {
   }
 }
 
-export class SubtitleSettingsProperty<T> {
-  private _manager: SubtitleSettingsManager;
-  private _onChanged: EventDispatcher<SubtitleSettingsManager, SubtitleSettingsProperty<T>>;
+export class SubtitleClosedCaptionsProperty<T> {
+  private _manager: SubtitleClosedCaptionsManager;
+  private _onChanged: EventDispatcher<
+    SubtitleClosedCaptionsManager,
+    SubtitleClosedCaptionsProperty<T>
+  >;
   private _value: T;
 
-  constructor(manager: SubtitleSettingsManager) {
+  constructor(manager: SubtitleClosedCaptionsManager) {
     this._manager = manager;
-    this._onChanged = new EventDispatcher<SubtitleSettingsManager, SubtitleSettingsProperty<T>>();
+    this._onChanged = new EventDispatcher<
+      SubtitleClosedCaptionsManager,
+      SubtitleClosedCaptionsProperty<T>
+    >();
   }
 
   public isSet(): boolean {
@@ -178,7 +138,7 @@ export class SubtitleSettingsProperty<T> {
     this._onChanged.dispatch(this._manager, this);
   }
 
-  public get onChanged(): Event<SubtitleSettingsManager, SubtitleSettingsProperty<T>> {
+  public get onChanged(): Event<SubtitleClosedCaptionsManager, SubtitleClosedCaptionsProperty<T>> {
     return this._onChanged.getEvent();
   }
 }

@@ -1,112 +1,87 @@
-import { SubtitleOverlay } from "./components/subtitleoverlay";
-import { SettingsPanelPage } from "./components/settingspanelpage";
-import { SettingsPanelItem } from "./components/settingspanelitem";
-import { VideoQualitySelectBox } from "./components/videoqualityselectbox";
-import { PlaybackSpeedSelectBox } from "./components/playbackspeedselectbox";
-import { AudioTrackSelectBox } from "./components/audiotrackselectbox";
-import { AudioQualitySelectBox } from "./components/audioqualityselectbox";
-import { SettingsPanel } from "./components/settingspanel";
-import { SubtitleSettingsPanelPage } from "./components/subtitlesettings/subtitlesettingspanelpage";
-import { SettingsPanelPageOpenButton } from "./components/settingspanelpageopenbutton";
-import { SubtitleSettingsLabel } from "./components/subtitlesettings/subtitlesettingslabel";
-import { SubtitleSelectBox } from "./components/subtitleselectbox";
-import { ControlBar } from "./components/controlbar";
-import { Container } from "./components/container";
-import { CustomCloseButton } from "./components/customclosebutton";
-import {
-  PlaybackTimeLabel,
-  PlaybackTimeLabelMode,
-} from "./components/playbacktimelabel";
-import { SeekBar } from "./components/seekbar";
-import { SeekBarLabel } from "./components/seekbarlabel";
-import { PlaybackToggleButton } from "./components/playbacktogglebutton";
-import { VolumeToggleButton } from "./components/volumetogglebutton";
-import { VolumeSlider } from "./components/volumeslider";
-import { Spacer } from "./components/spacer";
-import { PictureInPictureToggleButton } from "./components/pictureinpicturetogglebutton";
-import { AirPlayToggleButton } from "./components/airplaytogglebutton";
-import { CastToggleButton } from "./components/casttogglebutton";
-import { VRToggleButton } from "./components/vrtogglebutton";
-import { SettingsToggleButton } from "./components/settingstogglebutton";
-import { FullscreenToggleButton } from "./components/fullscreentogglebutton";
-import { UIContainer } from "./components/uicontainer";
-import { BufferingOverlay } from "./components/bufferingoverlay";
-import { PlaybackToggleOverlay } from "./components/playbacktoggleoverlay";
-import { CastStatusOverlay } from "./components/caststatusoverlay";
-import { TitleBar } from "./components/titlebar";
-import { RecommendationOverlay } from "./components/recommendationoverlay";
-import { Watermark } from "./components/watermark";
-import { ErrorMessageOverlay } from "./components/errormessageoverlay";
-import { AdClickOverlay } from "./components/adclickoverlay";
-import { AdMessageLabel } from "./components/admessagelabel";
-import { AdSkipButton } from "./components/adskipbutton";
-import { CloseButton } from "./components/closebutton";
-import { Controls } from "./components/controls";
-import { PlayButton } from "./components/playbutton";
-import { RewindButton } from "./components/rewind";
-import { ForwardButton } from "./components/forward";
-import { ChromecastButton } from "./components/chromecastbutton";
-import { NextEpisodeButton } from "./components/nextepisodebutton";
-import { Advisory } from "./components/advisory";
-import { FontSizeListBox } from "./components/subtitlesettings/fontsizelistbox";
-import {
-  MetadataAdvisory,
-  MetadataAdvisoryContent,
-} from "./components/metadataadvisory";
-import {
-  MetadataLabel,
-  MetadataLabelContent,
-} from "./components/metadatalabel";
-import { PlayerUtils } from "./playerutils";
-import { Label } from "./components/label";
-import { CastUIContainer } from "./components/castuicontainer";
-import { UIConditionContext, UIManager } from "./uimanager";
-import { UIConfig } from "./uiconfig";
-import { PlayerAPI } from "bitmovin-player";
-import { i18n } from "./localization/i18n";
-import { SubtitleListBox } from "./components/subtitlelistbox";
-import { AudioTrackListBox } from "./components/audiotracklistbox";
-import { SpatialNavigation } from "./spatialnavigation/spatialnavigation";
-import { RootNavigationGroup } from "./spatialnavigation/rootnavigationgroup";
-import {
-  ListNavigationGroup,
-  ListOrientation,
-} from "./spatialnavigation/ListNavigationGroup";
-import { SubtitleSettingsManager } from "./components/subtitlesettings/subtitlesettingsmanager";
+import { SubtitleOverlay } from './components/subtitleoverlay';
+import { SettingsPanelPage } from './components/settingspanelpage';
+import { SettingsPanelItem } from './components/settingspanelitem';
+import { VideoQualitySelectBox } from './components/videoqualityselectbox';
+import { PlaybackSpeedSelectBox } from './components/playbackspeedselectbox';
+import { AudioTrackSelectBox } from './components/audiotrackselectbox';
+import { AudioQualitySelectBox } from './components/audioqualityselectbox';
+import { SettingsPanel } from './components/settingspanel';
+import { SubtitleSettingsPanelPage } from './components/subtitlesettings/subtitlesettingspanelpage';
+import { SettingsPanelPageOpenButton } from './components/settingspanelpageopenbutton';
+import { SubtitleSettingsLabel } from './components/subtitlesettings/subtitlesettingslabel';
+import { SubtitleSelectBox } from './components/subtitleselectbox';
+import { ControlBar } from './components/controlbar';
+import { Container } from './components/container';
+import { CustomCloseButton } from './components/customclosebutton';
+import { PlaybackTimeLabel, PlaybackTimeLabelMode } from './components/playbacktimelabel';
+import { SeekBar } from './components/seekbar';
+import { SeekBarLabel } from './components/seekbarlabel';
+import { PlaybackToggleButton } from './components/playbacktogglebutton';
+import { VolumeToggleButton } from './components/volumetogglebutton';
+import { VolumeSlider } from './components/volumeslider';
+import { Spacer } from './components/spacer';
+import { PictureInPictureToggleButton } from './components/pictureinpicturetogglebutton';
+import { AirPlayToggleButton } from './components/airplaytogglebutton';
+import { CastToggleButton } from './components/casttogglebutton';
+import { VRToggleButton } from './components/vrtogglebutton';
+import { SettingsToggleButton } from './components/settingstogglebutton';
+import { FullscreenToggleButton } from './components/fullscreentogglebutton';
+import { UIContainer } from './components/uicontainer';
+import { BufferingOverlay } from './components/bufferingoverlay';
+import { PlaybackToggleOverlay } from './components/playbacktoggleoverlay';
+import { CastStatusOverlay } from './components/caststatusoverlay';
+import { TitleBar } from './components/titlebar';
+import { RecommendationOverlay } from './components/recommendationoverlay';
+import { Watermark } from './components/watermark';
+import { ErrorMessageOverlay } from './components/errormessageoverlay';
+import { AdClickOverlay } from './components/adclickoverlay';
+import { AdMessageLabel } from './components/admessagelabel';
+import { AdSkipButton } from './components/adskipbutton';
+import { CloseButton } from './components/closebutton';
+import { Controls } from './components/controls';
+import { PlayButton } from './components/playbutton';
+import { RewindButton } from './components/rewind';
+import { ForwardButton } from './components/forward';
+import { ChromecastButton } from './components/chromecastbutton';
+import { NextEpisodeButton } from './components/nextepisodebutton';
+import { Advisory } from './components/advisory';
+import { FontSizeListBox } from './components/subtitlesettings/fontsizelistbox';
+import { MetadataAdvisory, MetadataAdvisoryContent } from './components/metadataadvisory';
+import { MetadataLabel, MetadataLabelContent } from './components/metadatalabel';
+import { PlayerUtils } from './playerutils';
+import { Label } from './components/label';
+import { CastUIContainer } from './components/castuicontainer';
+import { UIConditionContext, UIManager } from './uimanager';
+import { UIConfig } from './uiconfig';
+import { PlayerAPI } from 'bitmovin-player';
+import { i18n } from './localization/i18n';
+import { SubtitleListBox } from './components/subtitlelistbox';
+import { AudioTrackListBox } from './components/audiotracklistbox';
+import { SpatialNavigation } from './spatialnavigation/spatialnavigation';
+import { RootNavigationGroup } from './spatialnavigation/rootnavigationgroup';
+import { ListNavigationGroup, ListOrientation } from './spatialnavigation/ListNavigationGroup';
+import { SubtitleSettingsManager } from './components/subtitlesettings/subtitlesettingsmanager';
+import { SubtitleClosedCaptionsManager } from './components/subtitlesettings/subtitleclosedcaptionsmanager';
+import { CloseCaptionsListBox } from './components/subtitlesettings/closecaptionslistbox';
 
 export namespace UIFactory {
-  export function buildDefaultUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildDefaultUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return UIFactory.buildBritboxSmallScreenUI(player, config);
   }
 
-  export function buildDefaultSmallScreenUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildDefaultSmallScreenUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return UIFactory.buildModernSmallScreenUI(player, config);
   }
 
-  export function buildDefaultBritbox(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildDefaultBritbox(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return UIFactory.buildBritboxSmallScreenUI(player, config);
   }
 
-  export function buildDefaultCastReceiverUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildDefaultCastReceiverUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return UIFactory.buildModernCastReceiverUI(player, config);
   }
 
-  export function buildDefaultTvUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildDefaultTvUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return UIFactory.buildModernTvUI(player, config);
   }
 
@@ -116,20 +91,14 @@ export namespace UIFactory {
     let mainSettingsPanelPage = new SettingsPanelPage({
       components: [
         new SettingsPanelItem(
-          i18n.getLocalizer("settings.video.quality"),
-          new VideoQualitySelectBox()
+          i18n.getLocalizer('settings.video.quality'),
+          new VideoQualitySelectBox(),
         ),
+        new SettingsPanelItem(i18n.getLocalizer('speed'), new PlaybackSpeedSelectBox()),
+        new SettingsPanelItem(i18n.getLocalizer('settings.audio.track'), new AudioTrackSelectBox()),
         new SettingsPanelItem(
-          i18n.getLocalizer("speed"),
-          new PlaybackSpeedSelectBox()
-        ),
-        new SettingsPanelItem(
-          i18n.getLocalizer("settings.audio.track"),
-          new AudioTrackSelectBox()
-        ),
-        new SettingsPanelItem(
-          i18n.getLocalizer("settings.audio.quality"),
-          new AudioQualitySelectBox()
+          i18n.getLocalizer('settings.audio.quality'),
+          new AudioQualitySelectBox(),
         ),
       ],
     });
@@ -149,21 +118,21 @@ export namespace UIFactory {
     let subtitleSettingsOpenButton = new SettingsPanelPageOpenButton({
       targetPage: subtitleSettingsPanelPage,
       container: settingsPanel,
-      ariaLabel: i18n.getLocalizer("settings.subtitles"),
-      text: i18n.getLocalizer("open"),
+      ariaLabel: i18n.getLocalizer('settings.subtitles'),
+      text: i18n.getLocalizer('open'),
     });
 
     mainSettingsPanelPage.addComponent(
       new SettingsPanelItem(
         new SubtitleSettingsLabel({
-          text: i18n.getLocalizer("settings.subtitles"),
+          text: i18n.getLocalizer('settings.subtitles'),
           opener: subtitleSettingsOpenButton,
         }),
         subtitleSelectBox,
         {
-          role: "menubar",
-        }
-      )
+          role: 'menubar',
+        },
+      ),
     );
 
     settingsPanel.addComponent(subtitleSettingsPanelPage);
@@ -180,10 +149,10 @@ export namespace UIFactory {
             new SeekBar({ label: new SeekBarLabel() }),
             new PlaybackTimeLabel({
               timeLabelMode: PlaybackTimeLabelMode.TotalTime,
-              cssClasses: ["text-right"],
+              cssClasses: ['text-right'],
             }),
           ],
-          cssClasses: ["controlbar-top"],
+          cssClasses: ['controlbar-top'],
         }),
         new Container({
           components: [
@@ -198,7 +167,7 @@ export namespace UIFactory {
             new SettingsToggleButton({ settingsPanel: settingsPanel }),
             new FullscreenToggleButton(),
           ],
-          cssClasses: ["controlbar-bottom"],
+          cssClasses: ['controlbar-bottom'],
         }),
       ],
     });
@@ -233,11 +202,11 @@ export namespace UIFactory {
         new Container({
           components: [
             new AdMessageLabel({
-              text: i18n.getLocalizer("ads.remainingTime"),
+              text: i18n.getLocalizer('ads.remainingTime'),
             }),
             new AdSkipButton(),
           ],
-          cssClass: "ui-ads-status",
+          cssClass: 'ui-ads-status',
         }),
         new ControlBar({
           components: [
@@ -249,12 +218,12 @@ export namespace UIFactory {
                 new Spacer(),
                 new FullscreenToggleButton(),
               ],
-              cssClasses: ["controlbar-bottom"],
+              cssClasses: ['controlbar-bottom'],
             }),
           ],
         }),
       ],
-      cssClasses: ["ui-skin-ads"],
+      cssClasses: ['ui-skin-ads'],
       hideDelay: 2000,
       hidePlayerStateExceptions: [
         PlayerUtils.PlayerState.Prepared,
@@ -270,20 +239,14 @@ export namespace UIFactory {
     let mainSettingsPanelPage = new SettingsPanelPage({
       components: [
         new SettingsPanelItem(
-          i18n.getLocalizer("settings.video.quality"),
-          new VideoQualitySelectBox()
+          i18n.getLocalizer('settings.video.quality'),
+          new VideoQualitySelectBox(),
         ),
+        new SettingsPanelItem(i18n.getLocalizer('speed'), new PlaybackSpeedSelectBox()),
+        new SettingsPanelItem(i18n.getLocalizer('settings.audio.track'), new AudioTrackSelectBox()),
         new SettingsPanelItem(
-          i18n.getLocalizer("speed"),
-          new PlaybackSpeedSelectBox()
-        ),
-        new SettingsPanelItem(
-          i18n.getLocalizer("settings.audio.track"),
-          new AudioTrackSelectBox()
-        ),
-        new SettingsPanelItem(
-          i18n.getLocalizer("settings.audio.quality"),
-          new AudioQualitySelectBox()
+          i18n.getLocalizer('settings.audio.quality'),
+          new AudioQualitySelectBox(),
         ),
       ],
     });
@@ -303,8 +266,8 @@ export namespace UIFactory {
     let subtitleSettingsOpenButton = new SettingsPanelPageOpenButton({
       targetPage: subtitleSettingsPanelPage,
       container: settingsPanel,
-      ariaLabel: i18n.getLocalizer("settings.subtitles"),
-      text: i18n.getLocalizer("open"),
+      ariaLabel: i18n.getLocalizer('settings.subtitles'),
+      text: i18n.getLocalizer('open'),
     });
 
     const subtitleSelectBox = new SubtitleSelectBox();
@@ -312,22 +275,20 @@ export namespace UIFactory {
     mainSettingsPanelPage.addComponent(
       new SettingsPanelItem(
         new SubtitleSettingsLabel({
-          text: i18n.getLocalizer("settings.subtitles"),
+          text: i18n.getLocalizer('settings.subtitles'),
           opener: subtitleSettingsOpenButton,
         }),
         subtitleSelectBox,
         {
-          role: "menubar",
-        }
-      )
+          role: 'menubar',
+        },
+      ),
     );
 
     settingsPanel.addComponent(subtitleSettingsPanelPage);
 
     settingsPanel.addComponent(new CloseButton({ target: settingsPanel }));
-    subtitleSettingsPanelPage.addComponent(
-      new CloseButton({ target: settingsPanel })
-    );
+    subtitleSettingsPanelPage.addComponent(new CloseButton({ target: settingsPanel }));
 
     let controlBar = new ControlBar({
       components: [
@@ -340,10 +301,10 @@ export namespace UIFactory {
             new SeekBar({ label: new SeekBarLabel() }),
             new PlaybackTimeLabel({
               timeLabelMode: PlaybackTimeLabelMode.TotalTime,
-              cssClasses: ["text-right"],
+              cssClasses: ['text-right'],
             }),
           ],
-          cssClasses: ["controlbar-top"],
+          cssClasses: ['controlbar-top'],
         }),
       ],
     });
@@ -372,7 +333,7 @@ export namespace UIFactory {
         new Watermark(),
         new ErrorMessageOverlay(),
       ],
-      cssClasses: ["ui-skin-smallscreen"],
+      cssClasses: ['ui-skin-smallscreen'],
       hideDelay: 2000,
       hidePlayerStateExceptions: [
         PlayerUtils.PlayerState.Prepared,
@@ -385,33 +346,26 @@ export namespace UIFactory {
   export function modernBritboxScreenUI() {
     let subtitleOverlay = new SubtitleOverlay();
     let manager = new SubtitleSettingsManager();
+    let managerClosedCaptions = new SubtitleClosedCaptionsManager();
 
     let mainSettingsPanelPage = new SettingsPanelPage({
       components: [
         new SettingsPanelItem(
-          i18n.getLocalizer("settings.subtitles.font.size"),
+          i18n.getLocalizer('settings.subtitles.font.size'),
           new FontSizeListBox({
             overlay: subtitleOverlay,
             settingsManager: manager,
-            cssClass: "ui-list",
-          })
+            cssClass: 'ui-list',
+          }),
         ),
-        // new SettingsPanelItem(
-        //   i18n.getLocalizer("settings.video.quality"),
-        //   new VideoQualitySelectBox()
-        // ),
-        // new SettingsPanelItem(
-        //   i18n.getLocalizer("speed"),
-        //   new PlaybackSpeedSelectBox()
-        // ),
-        // new SettingsPanelItem(
-        //   i18n.getLocalizer("settings.audio.track"),
-        //   new AudioTrackSelectBox()
-        // ),
-        // new SettingsPanelItem(
-        //   i18n.getLocalizer("settings.audio.quality"),
-        //   new AudioQualitySelectBox()
-        // ),
+        new SettingsPanelItem(
+          i18n.getLocalizer('settings.subtitles'),
+          new CloseCaptionsListBox({
+            overlay: subtitleOverlay,
+            settingsManager: managerClosedCaptions,
+            cssClass: 'ui-list',
+          }),
+        ),
       ],
     });
 
@@ -427,34 +381,10 @@ export namespace UIFactory {
       overlay: subtitleOverlay,
     });
 
-    let subtitleSettingsOpenButton = new SettingsPanelPageOpenButton({
-      targetPage: subtitleSettingsPanelPage,
-      container: settingsPanel,
-      ariaLabel: i18n.getLocalizer("settings.subtitles"),
-      text: i18n.getLocalizer("open"),
-    });
-
-    const subtitleSelectBox = new SubtitleSelectBox();
-
-    mainSettingsPanelPage.addComponent(
-      new SettingsPanelItem(
-        new SubtitleSettingsLabel({
-          text: i18n.getLocalizer("settings.subtitles"),
-          opener: subtitleSettingsOpenButton,
-        }),
-        subtitleSelectBox,
-        {
-          role: "menubar",
-        }
-      )
-    );
-
     settingsPanel.addComponent(subtitleSettingsPanelPage);
 
     settingsPanel.addComponent(new CloseButton({ target: settingsPanel }));
-    subtitleSettingsPanelPage.addComponent(
-      new CloseButton({ target: settingsPanel })
-    );
+    subtitleSettingsPanelPage.addComponent(new CloseButton({ target: settingsPanel }));
 
     let controlBar = new ControlBar({
       components: [
@@ -467,17 +397,17 @@ export namespace UIFactory {
             new PlaybackTimeLabel({
               hideInLivePlayback: true,
               timeLabelMode: PlaybackTimeLabelMode.TotalTime,
-              cssClasses: ["text-right"],
+              cssClasses: ['text-right'],
             }),
           ],
-          cssClasses: ["controlbar-top"],
+          cssClasses: ['controlbar-top'],
         }),
         new Container({
           components: [
             new SettingsToggleButton({ settingsPanel: settingsPanel }),
             new NextEpisodeButton(),
           ],
-          cssClass: "britbox-container-bottom",
+          cssClass: 'britbox-container-bottom',
         }),
       ],
     });
@@ -496,21 +426,17 @@ export namespace UIFactory {
               content: MetadataAdvisoryContent.Description,
             }),
           ],
-          cssClass: "advisory",
+          cssClass: 'advisory',
         }),
         new Controls({
-          components: [
-            new RewindButton(),
-            new PlayButton(),
-            new ForwardButton(),
-          ],
-          cssClass: "britbox-controls",
+          components: [new RewindButton(), new PlayButton(), new ForwardButton()],
+          cssClass: 'britbox-controls',
         }),
         new TitleBar({
           components: [
             new Container({
               components: [new CustomCloseButton()],
-              cssClass: "ui-actions left",
+              cssClass: 'ui-actions left',
             }),
             new Container({
               components: [
@@ -519,7 +445,7 @@ export namespace UIFactory {
                   content: MetadataLabelContent.Description,
                 }),
               ],
-              cssClasses: ["ui-title"],
+              cssClasses: ['ui-title'],
             }),
             new Container({
               components: [
@@ -527,14 +453,14 @@ export namespace UIFactory {
                 new CastToggleButton(),
                 new ChromecastButton(),
               ],
-              cssClass: "ui-actions",
+              cssClass: 'ui-actions',
             }),
           ],
         }),
         settingsPanel,
         new ErrorMessageOverlay(),
       ],
-      cssClasses: ["ui-skin-smallscreen", "britbox"],
+      cssClasses: ['ui-skin-smallscreen', 'britbox'],
       hideDelay: 2000,
       hidePlayerStateExceptions: [
         PlayerUtils.PlayerState.Prepared,
@@ -553,19 +479,19 @@ export namespace UIFactory {
         new TitleBar({
           components: [
             // dummy label with no content to move buttons to the right
-            new Label({ cssClass: "label-metadata-title" }),
+            new Label({ cssClass: 'label-metadata-title' }),
             new FullscreenToggleButton(),
           ],
         }),
         new Container({
           components: [
-            new AdMessageLabel({ text: "Ad: {remainingTime} secs" }),
+            new AdMessageLabel({ text: 'Ad: {remainingTime} secs' }),
             new AdSkipButton(),
           ],
-          cssClass: "ui-ads-status",
+          cssClass: 'ui-ads-status',
         }),
       ],
-      cssClasses: ["ui-skin-ads", "ui-skin-smallscreen"],
+      cssClasses: ['ui-skin-ads', 'ui-skin-smallscreen'],
       hideDelay: 2000,
       hidePlayerStateExceptions: [
         PlayerUtils.PlayerState.Prepared,
@@ -587,10 +513,10 @@ export namespace UIFactory {
             new SeekBar({ smoothPlaybackPositionUpdateIntervalMs: -1 }),
             new PlaybackTimeLabel({
               timeLabelMode: PlaybackTimeLabelMode.TotalTime,
-              cssClasses: ["text-right"],
+              cssClasses: ['text-right'],
             }),
           ],
-          cssClasses: ["controlbar-top"],
+          cssClasses: ['controlbar-top'],
         }),
       ],
     });
@@ -605,7 +531,7 @@ export namespace UIFactory {
         new TitleBar({ keepHiddenWithoutMetadata: true }),
         new ErrorMessageOverlay(),
       ],
-      cssClasses: ["ui-skin-cast-receiver"],
+      cssClasses: ['ui-skin-cast-receiver'],
       hideDelay: 2000,
       hidePlayerStateExceptions: [
         PlayerUtils.PlayerState.Prepared,
@@ -615,10 +541,7 @@ export namespace UIFactory {
     });
   }
 
-  export function buildModernUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildModernUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     // show smallScreen UI only on mobile/handheld devices
     let smallScreenSwitchWidth = 600;
 
@@ -660,14 +583,11 @@ export namespace UIFactory {
           },
         },
       ],
-      config
+      config,
     );
   }
 
-  export function buildModernSmallScreenUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildModernSmallScreenUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return new UIManager(
       player,
       [
@@ -684,14 +604,11 @@ export namespace UIFactory {
           },
         },
       ],
-      config
+      config,
     );
   }
 
-  export function buildBritboxSmallScreenUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildBritboxSmallScreenUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return new UIManager(
       player,
       [
@@ -708,21 +625,15 @@ export namespace UIFactory {
           },
         },
       ],
-      config
+      config,
     );
   }
 
-  export function buildModernCastReceiverUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildModernCastReceiverUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return new UIManager(player, modernCastReceiverUI(), config);
   }
 
-  export function buildModernTvUI(
-    player: PlayerAPI,
-    config: UIConfig = {}
-  ): UIManager {
+  export function buildModernTvUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
     return new UIManager(
       player,
       [
@@ -730,7 +641,7 @@ export namespace UIFactory {
           ...modernTvUI(),
         },
       ],
-      config
+      config,
     );
   }
 
@@ -760,15 +671,15 @@ export namespace UIFactory {
     const subtitleToggleButton = new SettingsToggleButton({
       settingsPanel: subtitleListPanel,
       autoHideWhenNoActiveSettings: true,
-      cssClass: "ui-subtitlesettingstogglebutton",
-      text: i18n.getLocalizer("settings.subtitles"),
+      cssClass: 'ui-subtitlesettingstogglebutton',
+      text: i18n.getLocalizer('settings.subtitles'),
     });
     const audioToggleButton = new SettingsToggleButton({
       settingsPanel: audioTrackListPanel,
       autoHideWhenNoActiveSettings: true,
-      cssClass: "ui-audiotracksettingstogglebutton",
-      ariaLabel: i18n.getLocalizer("settings.audio.track"),
-      text: i18n.getLocalizer("settings.audio.track"),
+      cssClass: 'ui-audiotracksettingstogglebutton',
+      ariaLabel: i18n.getLocalizer('settings.audio.track'),
+      text: i18n.getLocalizer('settings.audio.track'),
     });
     const uiContainer = new UIContainer({
       components: [
@@ -786,10 +697,10 @@ export namespace UIFactory {
                 seekBar,
                 new PlaybackTimeLabel({
                   timeLabelMode: PlaybackTimeLabelMode.RemainingTime,
-                  cssClasses: ["text-right"],
+                  cssClasses: ['text-right'],
                 }),
               ],
-              cssClasses: ["controlbar-top"],
+              cssClasses: ['controlbar-top'],
             }),
           ],
         }),
@@ -801,7 +712,7 @@ export namespace UIFactory {
                 subtitleToggleButton,
                 audioToggleButton,
               ],
-              cssClasses: ["ui-titlebar-top"],
+              cssClasses: ['ui-titlebar-top'],
             }),
             new Container({
               components: [
@@ -811,14 +722,14 @@ export namespace UIFactory {
                 subtitleListPanel,
                 audioTrackListPanel,
               ],
-              cssClasses: ["ui-titlebar-bottom"],
+              cssClasses: ['ui-titlebar-bottom'],
             }),
           ],
         }),
         new RecommendationOverlay(),
         new ErrorMessageOverlay(),
       ],
-      cssClasses: ["ui-skin-tv"],
+      cssClasses: ['ui-skin-tv'],
       hideDelay: 2000,
       hidePlayerStateExceptions: [
         PlayerUtils.PlayerState.Prepared,
@@ -833,18 +744,10 @@ export namespace UIFactory {
         playbackToggleOverlay,
         seekBar,
         audioToggleButton,
-        subtitleToggleButton
+        subtitleToggleButton,
       ),
-      new ListNavigationGroup(
-        ListOrientation.Vertical,
-        subtitleListPanel,
-        subtitleListBox
-      ),
-      new ListNavigationGroup(
-        ListOrientation.Vertical,
-        audioTrackListPanel,
-        audioTrackListBox
-      )
+      new ListNavigationGroup(ListOrientation.Vertical, subtitleListPanel, subtitleListBox),
+      new ListNavigationGroup(ListOrientation.Vertical, audioTrackListPanel, audioTrackListBox),
     );
 
     return {

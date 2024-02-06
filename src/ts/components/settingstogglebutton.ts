@@ -1,10 +1,10 @@
-import { ToggleButton, ToggleButtonConfig } from "./togglebutton";
-import { SettingsPanel } from "./settingspanel";
-import { UIInstanceManager } from "../uimanager";
-import { Component, ComponentConfig } from "./component";
-import { ArrayUtils } from "../arrayutils";
-import { PlayerAPI } from "bitmovin-player";
-import { i18n } from "../localization/i18n";
+import { ToggleButton, ToggleButtonConfig } from './togglebutton';
+import { SettingsPanel } from './settingspanel';
+import { UIInstanceManager } from '../uimanager';
+import { Component, ComponentConfig } from './component';
+import { ArrayUtils } from '../arrayutils';
+import { PlayerAPI } from 'bitmovin-player';
+import { i18n } from '../localization/i18n';
 
 /**
  * Configuration interface for the {@link SettingsToggleButton}.
@@ -32,33 +32,30 @@ export class SettingsToggleButton extends ToggleButton<SettingsToggleButtonConfi
     super(config);
 
     if (!config.settingsPanel) {
-      throw new Error("Required SettingsPanel is missing");
+      throw new Error('Required SettingsPanel is missing');
     }
 
     this.config = this.mergeConfig(
       config,
       {
-        cssClass: "ui-settingstogglebutton",
-        text: i18n.getLocalizer("settings"),
+        cssClass: 'ui-settingstogglebutton',
+        text: i18n.getLocalizer('settings'),
         settingsPanel: null,
         autoHideWhenNoActiveSettings: true,
-        role: "pop-up button",
+        role: 'pop-up button',
       },
-      <SettingsToggleButtonConfig>this.config
+      <SettingsToggleButtonConfig>this.config,
     );
 
     /**
      * WCAG20 standard defines which popup menu (element id) is owned by the button
      */
-    this.getDomElement().attr(
-      "aria-owns",
-      config.settingsPanel.getActivePage().getConfig().id
-    );
+    this.getDomElement().attr('aria-owns', config.settingsPanel.getActivePage().getConfig().id);
 
     /**
      * WCAG20 standard defines that a button has a popup menu bound to it
      */
-    this.getDomElement().attr("aria-haspopup", "true");
+    this.getDomElement().attr('aria-haspopup', 'true');
   }
 
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {
@@ -84,9 +81,7 @@ export class SettingsToggleButton extends ToggleButton<SettingsToggleButtonConfi
         // Hide all open SettingsPanels before opening this button's panel
         // (We need to iterate a copy because hiding them will automatically remove themselves from the array
         // due to the subscribeOnce above)
-        this.visibleSettingsPanels
-          .slice()
-          .forEach((settingsPanel) => settingsPanel.hide());
+        this.visibleSettingsPanels.slice().forEach((settingsPanel) => settingsPanel.hide());
       }
       settingsPanel.toggleHidden();
     });
@@ -101,16 +96,12 @@ export class SettingsToggleButton extends ToggleButton<SettingsToggleButtonConfi
 
     // Ensure that only one `SettingPanel` is visible at once
     // Keep track of shown SettingsPanels
-    uimanager.onComponentShow.subscribe(
-      (sender: Component<ComponentConfig>) => {
-        if (sender instanceof SettingsPanel) {
-          this.visibleSettingsPanels.push(sender);
-          sender.onHide.subscribeOnce(() =>
-            ArrayUtils.remove(this.visibleSettingsPanels, sender)
-          );
-        }
+    uimanager.onComponentShow.subscribe((sender: Component<ComponentConfig>) => {
+      if (sender instanceof SettingsPanel) {
+        this.visibleSettingsPanels.push(sender);
+        sender.onHide.subscribeOnce(() => ArrayUtils.remove(this.visibleSettingsPanels, sender));
       }
-    );
+    });
 
     // Handle automatic hiding of the button if there are no settings for the user to interact with
     if (config.autoHideWhenNoActiveSettings) {
@@ -127,9 +118,7 @@ export class SettingsToggleButton extends ToggleButton<SettingsToggleButtonConfi
         }
       };
       // Wire the handler to the event
-      settingsPanel.onSettingsStateChanged.subscribe(
-        settingsPanelItemsChangedHandler
-      );
+      settingsPanel.onSettingsStateChanged.subscribe(settingsPanelItemsChangedHandler);
       // Call handler for first init at startup
       settingsPanelItemsChangedHandler();
     }

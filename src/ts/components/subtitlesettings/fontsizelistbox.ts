@@ -1,9 +1,6 @@
-import {
-  SubtitleSettingListBox,
-  SubtitleSettingListBoxConfig,
-} from "./subtitlesettinglistbox";
-import { UIInstanceManager } from "../../uimanager";
-import { PlayerAPI } from "bitmovin-player";
+import { SubtitleSettingListBox, SubtitleSettingListBoxConfig } from './subtitlesettinglistbox';
+import { UIInstanceManager } from '../../uimanager';
+import { PlayerAPI } from 'bitmovin-player';
 
 /**
  * A select box providing a selection of different font colors.
@@ -15,22 +12,22 @@ export class FontSizeListBox extends SubtitleSettingListBox {
     this.config = this.mergeConfig(
       config,
       {
-        cssClasses: ["ui-subtitlesettingsfontsizeselectbox"],
+        cssClasses: ['ui-subtitlesettingsfontsizeselectbox'],
       },
-      this.config
+      this.config,
     );
   }
 
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {
     super.configure(player, uimanager);
 
-    this.addItem("100", "Aa");
-    this.addItem("150", "Aa");
-    this.addItem("200", "Aa");
+    this.addItem('100', 'Aa');
+    this.addItem('150', 'Aa');
+    this.addItem('200', 'Aa');
 
     this.settingsManager.fontSize.onChanged.subscribe((sender, property) => {
       if (property.isSet()) {
-        this.toggleOverlayClass("fontsize-" + property.value);
+        this.toggleOverlayClass('fontsize-' + property.value);
       } else {
         this.toggleOverlayClass(null);
       }
@@ -47,7 +44,7 @@ export class FontSizeListBox extends SubtitleSettingListBox {
     if (this.settingsManager.fontSize.isSet()) {
       this.selectItem(this.settingsManager.fontSize.value);
     } else {
-      this.selectItem("100");
+      this.selectItem('100');
     }
   }
 }

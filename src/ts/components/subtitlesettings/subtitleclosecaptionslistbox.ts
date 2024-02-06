@@ -1,22 +1,22 @@
-import { BritboxListBox } from './../britboxlistbox';
+import { BritboxListBox } from '../britboxlistbox';
 import { SubtitleOverlay } from '../subtitleoverlay';
 import { ListSelectorConfig } from '../listselector';
-import { SubtitleSettingsManager } from './subtitlesettingsmanager';
+import { SubtitleClosedCaptionsManager } from './subtitleclosedcaptionsmanager';
 
-export interface SubtitleSettingListBoxConfig extends ListSelectorConfig {
+export interface CloseCaptionsListBoxConfig extends ListSelectorConfig {
   overlay: SubtitleOverlay;
-  settingsManager: SubtitleSettingsManager;
+  settingsManager: SubtitleClosedCaptionsManager;
 }
 
 /**
  * Base class for all subtitles settings list box
  **/
-export class SubtitleSettingListBox extends BritboxListBox {
-  protected settingsManager: SubtitleSettingsManager;
+export class SubtitleCloseCaptionsListBox extends BritboxListBox {
+  protected settingsManager: SubtitleClosedCaptionsManager;
   protected overlay: SubtitleOverlay;
   private currentCssClass: string;
 
-  constructor(config: SubtitleSettingListBoxConfig) {
+  constructor(config: CloseCaptionsListBoxConfig) {
     super(config);
 
     this.settingsManager = config.settingsManager;

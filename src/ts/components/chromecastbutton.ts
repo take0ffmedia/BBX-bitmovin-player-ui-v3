@@ -1,6 +1,6 @@
-import { ToggleButton, ToggleButtonConfig } from "./togglebutton";
-import { PlayerAPI, PlayerConfig } from "bitmovin-player";
-import { UIInstanceManager } from "../uimanager";
+import { ToggleButton, ToggleButtonConfig } from './togglebutton';
+import { PlayerAPI, PlayerConfig } from 'bitmovin-player';
+import { UIInstanceManager } from '../uimanager';
 
 declare const window: any;
 
@@ -17,7 +17,7 @@ export class ChromecastButton extends ToggleButton<ToggleButtonConfig> {
     super(config);
 
     const defaultConfig: ToggleButtonConfig = {
-      cssClass: "ui-chromecast",
+      cssClass: 'ui-chromecast',
       // disabled: true,
     };
 
@@ -28,27 +28,21 @@ export class ChromecastButton extends ToggleButton<ToggleButtonConfig> {
     super.configure(player, uimanager);
 
     if (window.bitmovin.customMessageHandler) {
-      window.bitmovin.customMessageHandler.on(
-        "chromecastButton",
-        (data?: string) => {
-          if (this.isEnabled() && data === "false") {
-            this.disable();
-          } else {
-            this.enable();
-          }
+      window.bitmovin.customMessageHandler.on('chromecastButton', (data?: string) => {
+        if (this.isEnabled() && data === 'false') {
+          this.disable();
+        } else {
+          this.enable();
         }
-      );
+      });
 
       this.onClick.subscribe(() => {
         if (player.isPlaying()) {
           player.pause();
         }
-        let result =
-          window.bitmovin.customMessageHandler.sendSynchronous("chromecast");
-        console.log("Return value from native:", result);
-        window.bitmovin.customMessageHandler.sendAsynchronous(
-          "chromecastAsync"
-        );
+        let result = window.bitmovin.customMessageHandler.sendSynchronous('chromecast');
+        console.log('Return value from native:', result);
+        window.bitmovin.customMessageHandler.sendAsynchronous('chromecastAsync');
       });
     }
   }

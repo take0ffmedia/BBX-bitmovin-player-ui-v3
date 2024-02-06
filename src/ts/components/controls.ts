@@ -1,6 +1,6 @@
-import { Container, ContainerConfig } from "./container";
-import { UIInstanceManager } from "../uimanager";
-import { PlayerAPI } from "bitmovin-player";
+import { Container, ContainerConfig } from './container';
+import { UIInstanceManager } from '../uimanager';
+import { PlayerAPI } from 'bitmovin-player';
 
 /**
  * Configuration interface for a {@link Controls}.
@@ -24,12 +24,12 @@ export class Controls extends Container<ControlsConfig> {
     this.config = this.mergeConfig(
       config,
       {
-        cssClass: "ui-controls",
+        cssClass: 'ui-controls',
         hidden: true,
         components: [],
         keepHiddenWithoutMetadata: false,
       },
-      <ControlsConfig>this.config
+      <ControlsConfig>this.config,
     );
   }
 

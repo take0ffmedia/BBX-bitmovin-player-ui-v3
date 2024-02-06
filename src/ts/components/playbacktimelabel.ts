@@ -1,9 +1,9 @@
-import { LabelConfig, Label } from "./label";
-import { UIInstanceManager } from "../uimanager";
+import { LabelConfig, Label } from './label';
+import { UIInstanceManager } from '../uimanager';
 import LiveStreamDetectorEventArgs = PlayerUtils.LiveStreamDetectorEventArgs;
-import { PlayerUtils } from "../playerutils";
-import { StringUtils } from "../stringutils";
-import { PlayerAPI } from "bitmovin-player";
+import { PlayerUtils } from '../playerutils';
+import { StringUtils } from '../stringutils';
+import { PlayerAPI } from 'bitmovin-player';
 
 export enum PlaybackTimeLabelMode {
   /**
@@ -50,11 +50,11 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
     this.config = this.mergeConfig(
       config,
       <PlaybackTimeLabelConfig>{
-        cssClass: "ui-playbacktimelabel",
+        cssClass: 'ui-playbacktimelabel',
         timeLabelMode: PlaybackTimeLabelMode.CurrentAndTotalTime,
         hideInLivePlayback: false,
       },
-      this.config
+      this.config,
     );
   }
 
@@ -63,8 +63,8 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
 
     let config = this.getConfig();
     let live = false;
-    let liveCssClass = this.prefixCss("ui-playbacktimelabel-live");
-    let liveEdgeCssClass = this.prefixCss("ui-playbacktimelabel-live-edge");
+    let liveCssClass = this.prefixCss('ui-playbacktimelabel-live');
+    let liveEdgeCssClass = this.prefixCss('ui-playbacktimelabel-live-edge');
     let minWidth = 0;
 
     let liveClickHandler = () => {
@@ -78,7 +78,7 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
       // Attach/detach live marker class
       if (live) {
         this.getDomElement().addClass(liveCssClass);
-        this.setText("");
+        this.setText('');
         if (config.hideInLivePlayback) {
           this.hide();
         }
@@ -112,23 +112,18 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
       }
     };
 
-    let liveStreamDetector = new PlayerUtils.LiveStreamDetector(
-      player,
-      uimanager
-    );
-    liveStreamDetector.onLiveChanged.subscribe(
-      (sender, args: LiveStreamDetectorEventArgs) => {
-        live = args.live;
-        updateLiveState();
-      }
-    );
+    let liveStreamDetector = new PlayerUtils.LiveStreamDetector(player, uimanager);
+    liveStreamDetector.onLiveChanged.subscribe((sender, args: LiveStreamDetectorEventArgs) => {
+      live = args.live;
+      updateLiveState();
+    });
     liveStreamDetector.detect(); // Initial detection
 
     let playbackTimeHandler = () => {
       if (!live && player.getDuration() !== Infinity) {
         this.setTime(
           PlayerUtils.getCurrentTimeRelativeToSeekableRange(player),
-          player.getDuration()
+          player.getDuration(),
         );
       }
 
@@ -138,7 +133,7 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
       if (width > minWidth) {
         minWidth = width;
         this.getDomElement().css({
-          "min-width": minWidth + "px",
+          'min-width': minWidth + 'px',
         });
       }
     };
@@ -150,10 +145,7 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
     player.on(player.exports.PlayerEvent.TimeShifted, updateLiveTimeshiftState);
     player.on(player.exports.PlayerEvent.Playing, updateLiveTimeshiftState);
     player.on(player.exports.PlayerEvent.Paused, updateLiveTimeshiftState);
-    player.on(
-      player.exports.PlayerEvent.StallStarted,
-      updateLiveTimeshiftState
-    );
+    player.on(player.exports.PlayerEvent.StallStarted, updateLiveTimeshiftState);
     player.on(player.exports.PlayerEvent.StallEnded, updateLiveTimeshiftState);
 
     let init = () => {
@@ -161,14 +153,12 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
       // changes)
       minWidth = 0;
       this.getDomElement().css({
-        "min-width": null,
+        'min-width': null,
       });
 
       // Set time format depending on source duration
       this.timeFormat =
-        Math.abs(
-          player.isLive() ? player.getMaxTimeShift() : player.getDuration()
-        ) >= 3600
+        Math.abs(player.isLive() ? player.getMaxTimeShift() : player.getDuration()) >= 3600
           ? StringUtils.FORMAT_HHMMSS
           : StringUtils.FORMAT_MMSS;
 
@@ -186,10 +176,7 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
    * @param durationSeconds the total duration in seconds
    */
   setTime(playbackSeconds: number, durationSeconds: number) {
-    let currentTime = StringUtils.secondsToTime(
-      playbackSeconds,
-      this.timeFormat
-    );
+    let currentTime = StringUtils.secondsToTime(playbackSeconds, this.timeFormat);
     let totalTime = StringUtils.secondsToTime(durationSeconds, this.timeFormat);
 
     switch ((<PlaybackTimeLabelConfig>this.config).timeLabelMode) {
@@ -205,7 +192,7 @@ export class PlaybackTimeLabel extends Label<PlaybackTimeLabelConfig> {
       case PlaybackTimeLabelMode.RemainingTime:
         let remainingTime = StringUtils.secondsToTime(
           durationSeconds - playbackSeconds,
-          this.timeFormat
+          this.timeFormat,
         );
         this.setText(`${remainingTime}`);
         break;

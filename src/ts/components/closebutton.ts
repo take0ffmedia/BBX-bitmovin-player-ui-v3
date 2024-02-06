@@ -1,6 +1,6 @@
-import {ButtonConfig, Button} from './button';
-import {UIInstanceManager} from '../uimanager';
-import {Component, ComponentConfig} from './component';
+import { ButtonConfig, Button } from './button';
+import { UIInstanceManager } from '../uimanager';
+import { Component, ComponentConfig } from './component';
 import { PlayerAPI } from 'bitmovin-player';
 import { i18n } from '../localization/i18n';
 
@@ -18,14 +18,17 @@ export interface CloseButtonConfig extends ButtonConfig {
  * A button that closes (hides) a configured component.
  */
 export class CloseButton extends Button<CloseButtonConfig> {
-
   constructor(config: CloseButtonConfig) {
     super(config);
 
-    this.config = this.mergeConfig(config, {
-      cssClass: 'ui-closebutton',
-      text: i18n.getLocalizer('close'),
-    } as CloseButtonConfig, this.config);
+    this.config = this.mergeConfig(
+      config,
+      {
+        cssClass: 'ui-closebutton',
+        text: i18n.getLocalizer('close'),
+      } as CloseButtonConfig,
+      this.config,
+    );
   }
 
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {
@@ -35,6 +38,9 @@ export class CloseButton extends Button<CloseButtonConfig> {
 
     this.onClick.subscribe(() => {
       config.target.hide();
+      if (player.isPaused()) {
+        player.play();
+      }
     });
   }
 }
