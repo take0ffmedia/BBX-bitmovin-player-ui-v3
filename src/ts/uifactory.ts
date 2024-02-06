@@ -47,6 +47,11 @@ import { RewindButton } from "./components/rewind";
 import { ForwardButton } from "./components/forward";
 import { ChromecastButton } from "./components/chromecastbutton";
 import { NextEpisodeButton } from "./components/nextepisodebutton";
+import { Advisory } from "./components/advisory";
+import {
+  MetadataAdvisory,
+  MetadataAdvisoryContent,
+} from "./components/metadataadvisory";
 import {
   MetadataLabel,
   MetadataLabelContent,
@@ -471,6 +476,17 @@ export namespace UIFactory {
         subtitleOverlay,
         new BufferingOverlay(),
         controlBar,
+        new Advisory({
+          components: [
+            new MetadataAdvisory({
+              content: MetadataAdvisoryContent.Classification,
+            }),
+            new MetadataAdvisory({
+              content: MetadataAdvisoryContent.Description,
+            }),
+          ],
+          cssClass: "advisory",
+        }),
         new Controls({
           components: [
             new RewindButton(),
