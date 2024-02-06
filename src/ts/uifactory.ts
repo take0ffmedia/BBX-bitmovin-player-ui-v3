@@ -48,6 +48,7 @@ import { ForwardButton } from "./components/forward";
 import { ChromecastButton } from "./components/chromecastbutton";
 import { NextEpisodeButton } from "./components/nextepisodebutton";
 import { Advisory } from "./components/advisory";
+import { FontSizeListBox } from "./components/subtitlesettings/fontsizelistbox";
 import {
   MetadataAdvisory,
   MetadataAdvisoryContent,
@@ -71,6 +72,7 @@ import {
   ListNavigationGroup,
   ListOrientation,
 } from "./spatialnavigation/ListNavigationGroup";
+import { SubtitleSettingsManager } from "./components/subtitlesettings/subtitlesettingsmanager";
 
 export namespace UIFactory {
   export function buildDefaultUI(
@@ -382,25 +384,34 @@ export namespace UIFactory {
 
   export function modernBritboxScreenUI() {
     let subtitleOverlay = new SubtitleOverlay();
+    let manager = new SubtitleSettingsManager();
 
     let mainSettingsPanelPage = new SettingsPanelPage({
       components: [
         new SettingsPanelItem(
-          i18n.getLocalizer("settings.video.quality"),
-          new VideoQualitySelectBox()
+          i18n.getLocalizer("settings.subtitles.font.size"),
+          new FontSizeListBox({
+            overlay: subtitleOverlay,
+            settingsManager: manager,
+            cssClass: "ui-list",
+          })
         ),
-        new SettingsPanelItem(
-          i18n.getLocalizer("speed"),
-          new PlaybackSpeedSelectBox()
-        ),
-        new SettingsPanelItem(
-          i18n.getLocalizer("settings.audio.track"),
-          new AudioTrackSelectBox()
-        ),
-        new SettingsPanelItem(
-          i18n.getLocalizer("settings.audio.quality"),
-          new AudioQualitySelectBox()
-        ),
+        // new SettingsPanelItem(
+        //   i18n.getLocalizer("settings.video.quality"),
+        //   new VideoQualitySelectBox()
+        // ),
+        // new SettingsPanelItem(
+        //   i18n.getLocalizer("speed"),
+        //   new PlaybackSpeedSelectBox()
+        // ),
+        // new SettingsPanelItem(
+        //   i18n.getLocalizer("settings.audio.track"),
+        //   new AudioTrackSelectBox()
+        // ),
+        // new SettingsPanelItem(
+        //   i18n.getLocalizer("settings.audio.quality"),
+        //   new AudioQualitySelectBox()
+        // ),
       ],
     });
 
