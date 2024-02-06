@@ -70,7 +70,7 @@ export namespace UIFactory {
   }
 
   export function buildDefaultSmallScreenUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
-    return UIFactory.buildModernSmallScreenUI(player, config);
+    return UIFactory.buildBritboxSmallScreenUI(player, config);
   }
 
   export function buildDefaultBritbox(player: PlayerAPI, config: UIConfig = {}): UIManager {

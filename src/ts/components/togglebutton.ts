@@ -1,5 +1,5 @@
-import {Button, ButtonConfig} from './button';
-import {NoArgs, EventDispatcher, Event} from '../eventdispatcher';
+import { Button, ButtonConfig } from './button';
+import { NoArgs, EventDispatcher, Event } from '../eventdispatcher';
 import { UIInstanceManager } from '../uimanager';
 import { PlayerAPI } from 'bitmovin-player';
 import { LocalizableText } from '../localization/i18n';
@@ -43,7 +43,6 @@ export interface ToggleButtonConfig extends ButtonConfig {
  * A button that can be toggled between 'on' and 'off' states.
  */
 export class ToggleButton<Config extends ToggleButtonConfig> extends Button<Config> {
-
   private onState: boolean;
 
   private toggleButtonEvents = {

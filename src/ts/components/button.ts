@@ -1,7 +1,7 @@
-import {ComponentConfig, Component} from './component';
-import {DOM} from '../dom';
-import {EventDispatcher, NoArgs, Event} from '../eventdispatcher';
-import { LocalizableText , i18n } from '../localization/i18n';
+import { ComponentConfig, Component } from './component';
+import { DOM } from '../dom';
+import { EventDispatcher, NoArgs, Event } from '../eventdispatcher';
+import { LocalizableText, i18n } from '../localization/i18n';
 
 /**
  * Configuration interface for a {@link Button} component.
@@ -17,7 +17,6 @@ export interface ButtonConfig extends ComponentConfig {
  * A simple clickable button.
  */
 export class Button<Config extends ButtonConfig> extends Component<Config> {
-
   private buttonEvents = {
     onClick: new EventDispatcher<Button<Config>, NoArgs>(),
   };
@@ -25,24 +24,28 @@ export class Button<Config extends ButtonConfig> extends Component<Config> {
   constructor(config: Config) {
     super(config);
 
-    this.config = this.mergeConfig(config, {
-      cssClass: 'ui-button',
-      role: 'button',
-      tabIndex: 0,
-    } as Config, this.config);
+    this.config = this.mergeConfig(
+      config,
+      {
+        cssClass: 'ui-button',
+        role: 'button',
+        tabIndex: 0,
+      } as Config,
+      this.config,
+    );
   }
 
   protected toDomElement(): DOM {
     const buttonElementAttributes: { [name: string]: string } = {
-      'id': this.config.id,
+      id: this.config.id,
       'aria-label': i18n.performLocalization(this.config.ariaLabel || this.config.text),
-      'class': this.getCssClasses(),
-      'type' : 'button',
+      class: this.getCssClasses(),
+      type: 'button',
       /**
-      * WCAG20 standard to display if a button is pressed or not
-      */
+       * WCAG20 standard to display if a button is pressed or not
+       */
       'aria-pressed': 'false',
-      'tabindex': this.config.tabIndex.toString(),
+      tabindex: this.config.tabIndex.toString(),
     };
 
     if (this.config.role != null) {
@@ -50,9 +53,11 @@ export class Button<Config extends ButtonConfig> extends Component<Config> {
     }
 
     // Create the button element with the text label
-    let buttonElement = new DOM('button', buttonElementAttributes).append(new DOM('span', {
-      'class': this.prefixCss('label'),
-    }).html(i18n.performLocalization(this.config.text)));
+    let buttonElement = new DOM('button', buttonElementAttributes).append(
+      new DOM('span', {
+        class: this.prefixCss('label'),
+      }).html(i18n.performLocalization(this.config.text)),
+    );
 
     // Listen for the click event on the button element and trigger the corresponding event on the button component
     buttonElement.on('click', () => {
@@ -67,7 +72,9 @@ export class Button<Config extends ButtonConfig> extends Component<Config> {
    * @param text the text to put into the label of the button
    */
   setText(text: LocalizableText): void {
-    this.getDomElement().find('.' + this.prefixCss('label')).html(i18n.performLocalization(text));
+    this.getDomElement()
+      .find('.' + this.prefixCss('label'))
+      .html(i18n.performLocalization(text));
   }
 
   protected onClickEvent() {

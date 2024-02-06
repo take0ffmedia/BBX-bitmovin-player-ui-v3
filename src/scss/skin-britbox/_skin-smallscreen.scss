@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 .bounceInRight {
   transform: translateY(0);
@@ -15,10 +15,12 @@
 }
 
 .#{$prefix}-britbox {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
   .#{$prefix}-ui-chromecast {
     @extend %ui-button;
 
-    background-image: url("../../assets/skin-britbox/images/chromecast.svg");
+    background-image: url('../../assets/skin-britbox/images/chromecast.svg');
 
     &.#{$prefix}-disabled {
       display: none;
@@ -33,7 +35,7 @@
     }
 
     &.#{$prefix}-on {
-      background-image: url("../../assets/skin-modern/images/chromecastX.svg");
+      background-image: url('../../assets/skin-modern/images/chromecastX.svg');
     }
   }
   .#{$prefix}-britbox-controls {
@@ -62,14 +64,14 @@
       }
     }
     .#{$prefix}-ui-rewind {
-      background-image: url("../../assets/skin-britbox/images/back-10-sec.svg");
+      background-image: url('../../assets/skin-britbox/images/back-10-sec.svg');
 
       &.#{$prefix}-disabled {
         display: none;
       }
     }
     .#{$prefix}-ui-forward {
-      background-image: url("../../assets/skin-britbox/images/next-10-sec.svg");
+      background-image: url('../../assets/skin-britbox/images/next-10-sec.svg');
 
       &.#{$prefix}-disabled {
         display: none;
@@ -78,16 +80,16 @@
     .#{$prefix}-ui-play {
       margin: 0 70px;
       &.#{$prefix}-on {
-        background-image: url("../../assets/skin-britbox/images/pause.svg");
+        background-image: url('../../assets/skin-britbox/images/pause.svg');
       }
       &.#{$prefix}-off {
-        background-image: url("../../assets/skin-britbox/images/play.svg");
+        background-image: url('../../assets/skin-britbox/images/play.svg');
       }
     }
   }
   .#{$prefix}-ui-titlebar {
     .#{$prefix}-ui-customclosetogglebutton {
-      background-image: url("../../assets/skin-britbox/images/arrow-back-browser.svg");
+      background-image: url('../../assets/skin-britbox/images/arrow-back-browser.svg');
       background-color: transparent;
       border: none;
       background-repeat: no-repeat;
@@ -197,7 +199,7 @@
     text-transform: uppercase;
 
     &.#{$prefix}-ui-playbacktimelabel-live {
-      background-image: url("../../assets/skin-britbox/images/live.svg");
+      background-image: url('../../assets/skin-britbox/images/live.svg');
       background-color: $color-secondary;
       background-repeat: no-repeat;
       background-position: center;
@@ -220,7 +222,7 @@
     .#{$prefix}-ui-nextepisode {
       margin-left: 2%;
       border: none;
-      background-image: url("../../assets/skin-britbox/images/next-episode.svg");
+      background-image: url('../../assets/skin-britbox/images/next-episode.svg');
       background-color: transparent;
       background-size: 14px;
       background-repeat: no-repeat;
@@ -268,7 +270,7 @@
     }
 
     .#{$prefix}-ui-settings-panel-page {
-      padding: unquote("max(2.0em, env(safe-area-inset-top)) 0");
+      padding: unquote('max(2.0em, env(safe-area-inset-top)) 0');
 
       &.#{$prefix}-active {
         > .#{$prefix}-container-wrapper {
@@ -292,8 +294,8 @@
       .#{$prefix}-ui-closebutton {
         border: none;
         position: absolute;
-        top: unquote("max(2.0em, env(safe-area-inset-top))");
-        right: unquote("max(2.0em, env(safe-area-inset-top))");
+        top: unquote('max(2.0em, env(safe-area-inset-top))');
+        right: unquote('max(2.0em, env(safe-area-inset-top))');
         width: 40px;
         height: 40px;
 
@@ -351,7 +353,7 @@
           text-transform: capitalize;
           font-family: MuseoSans-500;
           &:before {
-            content: "";
+            content: '';
             display: inline-block;
             width: 20px;
             height: 20px;
@@ -372,55 +374,55 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: 24px 20px;
-            background-image: url("../../assets/skin-britbox/images/check.svg");
+            background-image: url('../../assets/skin-britbox/images/check.svg');
           }
         }
-        &[aria-label="Off"] {
+        &[aria-label='Off'] {
           order: 0;
         }
-        &[aria-label="off"] {
+        &[aria-label='off'] {
           order: 0;
         }
-        &[aria-label="On"] {
+        &[aria-label='On'] {
           display: none;
         }
-        &[aria-label="on"] {
+        &[aria-label='on'] {
           display: none;
         }
-        &[id="en-US"] {
+        &[id='en-US'] {
           order: 1;
         }
-        &[id="en-GB"] {
+        &[id='en-GB'] {
           order: 2;
         }
-        &[id="da-DK"] {
+        &[id='da-DK'] {
           order: 3;
         }
-        &[id="nb-NO"] {
+        &[id='nb-NO'] {
           order: 4;
         }
-        &[id="fi-FI"] {
+        &[id='fi-FI'] {
           order: 5;
         }
-        &[id="sv-SE"] {
+        &[id='sv-SE'] {
           order: 6;
         }
-        &[aria-label="english"] {
+        &[aria-label='english'] {
           order: 1;
         }
-        &[aria-label="dansk"] {
+        &[aria-label='dansk'] {
           order: 2;
         }
-        &[aria-label="norsk bokmål"] {
+        &[aria-label='norsk bokmål'] {
           order: 3;
         }
-        &[aria-label="norsk"] {
+        &[aria-label='norsk'] {
           order: 3;
         }
-        &[aria-label="suomi"] {
+        &[aria-label='suomi'] {
           order: 4;
         }
-        &[aria-label="svenska"] {
+        &[aria-label='svenska'] {
           order: 5;
         }
 
@@ -464,7 +466,7 @@
 
     .#{$prefix}-container-wrapper {
       .#{$prefix}-ui-buffering-overlay-loading {
-        background-image: url("../../assets/skin-britbox/images/loading.svg");
+        background-image: url('../../assets/skin-britbox/images/loading.svg');
         background-repeat: no-repeat;
         background-size: 64px;
         background-color: #000000;
@@ -490,8 +492,8 @@
 
   .#{$prefix}-advisory {
     position: absolute;
-    top: unquote("max(2.0em, env(safe-area-inset-top))");
-    left: unquote("max(2.0em, env(safe-area-inset-left))");
+    top: unquote('max(2.0em, env(safe-area-inset-top))');
+    left: unquote('max(2.0em, env(safe-area-inset-left))');
     padding: 0.5em 1em 1em;
     z-index: 1;
     padding: 0;
@@ -589,7 +591,7 @@
 
   .#{$prefix}-ui-settingstogglebutton {
     background-position: left;
-    background-image: url("../../assets/skin-britbox/images/configuration.svg");
+    background-image: url('../../assets/skin-britbox/images/configuration.svg');
 
     &.#{$prefix}-disabled {
       display: none;
