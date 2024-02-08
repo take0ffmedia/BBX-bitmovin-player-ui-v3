@@ -2,6 +2,8 @@ import { LabelConfig, Label } from './label';
 import { UIInstanceManager } from '../uimanager';
 import { PlayerAPI } from 'bitmovin-player';
 
+declare const window: any;
+
 /**
  * Enumerates the types of content that the {@link MetadataLabel} can display.
  */
@@ -75,5 +77,11 @@ export class MetadataLabel extends Label<MetadataLabelConfig> {
     player.on(player.exports.PlayerEvent.SourceUnloaded, unload);
 
     uimanager.getConfig().events.onUpdated.subscribe(init);
+
+    if (window.bitmovin.customMessageHandler) {
+      window.bitmovin.customMessageHandler.on('changeMetadata', (data?: string) => {
+        init();
+      });
+    }
   }
 }
