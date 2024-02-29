@@ -18,14 +18,6 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
 
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {
     super.configure(player, uimanager);
-    let init = () => {
-      if (player.isLive()) {
-        this.disable();
-      } else {
-        this.enable();
-      }
-    };
-
     if (window.bitmovin.customMessageHandler) {
       window.bitmovin.customMessageHandler.on('toggleForwardButton', (data?: string) => {
         if (this.isEnabled()) {
@@ -42,8 +34,5 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
         window.bitmovin.customMessageHandler.sendAsynchronous('forwardButtonAsync');
       });
     }
-
-    init();
-    player.on(player.exports.PlayerEvent.SourceLoaded, init);
   }
 }

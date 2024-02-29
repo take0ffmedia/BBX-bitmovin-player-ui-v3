@@ -61,14 +61,6 @@ export class SettingsToggleButton extends ToggleButton<SettingsToggleButtonConfi
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {
     super.configure(player, uimanager);
 
-    let init = () => {
-      if (player.isLive()) {
-        this.disable();
-      } else {
-        this.enable();
-      }
-    };
-
     let config = this.getConfig();
     let settingsPanel = config.settingsPanel;
 

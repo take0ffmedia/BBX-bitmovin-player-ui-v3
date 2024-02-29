@@ -19,14 +19,6 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {
     super.configure(player, uimanager);
 
-    let init = () => {
-      if (player.isLive()) {
-        this.disable();
-      } else {
-        this.enable();
-      }
-    };
-
     if (window.bitmovin.customMessageHandler) {
       window.bitmovin.customMessageHandler.on('toggleRewindButton', (data?: string) => {
         if (this.isEnabled()) {
@@ -43,9 +35,5 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
         window.bitmovin.customMessageHandler.sendAsynchronous('rewindButtonAsync');
       });
     }
-
-    init();
-    player.on(player.exports.PlayerEvent.SourceLoaded, init);
-    uimanager.getConfig().events.onUpdated.subscribe(init);
   }
 }

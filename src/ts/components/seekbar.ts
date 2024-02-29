@@ -248,14 +248,6 @@ export class SeekBar extends Component<SeekBarConfig> {
       return;
     }
 
-    let init = () => {
-      if (player.isLive()) {
-        this.disable();
-      } else {
-        this.enable();
-      }
-    };
-
     uimanager.onControlsShow.subscribe(() => {
       this.isUiShown = true;
     });
@@ -506,11 +498,6 @@ export class SeekBar extends Component<SeekBarConfig> {
     ) {
       this.configureSmoothPlaybackPositionUpdater(player, uimanager);
     }
-
-    init();
-
-    player.on(player.exports.PlayerEvent.SourceLoaded, init);
-
     // Initialize markers
     this.initializeTimelineMarkers(player, uimanager);
   }

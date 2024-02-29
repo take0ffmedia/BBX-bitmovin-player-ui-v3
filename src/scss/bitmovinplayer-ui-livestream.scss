@@ -1,0 +1,16 @@
+.#{$prefix}-britbox {
+  .#{$prefix}-ui-settingstogglebutton {
+    display: none;
+  }
+  .#{$prefix}-britbox-controls {
+    .#{$prefix}-ui-rewind {
+      display: none;
+    }
+    .#{$prefix}-ui-forward {
+      display: none;
+    }
+  }
+  .#{$prefix}-ui-seekbar {
+    display: none;
+  }
+}
