@@ -63,6 +63,7 @@ import { ListNavigationGroup, ListOrientation } from './spatialnavigation/ListNa
 import { SubtitleSettingsManager } from './components/subtitlesettings/subtitlesettingsmanager';
 import { SubtitleClosedCaptionsManager } from './components/subtitlesettings/subtitleclosedcaptionsmanager';
 import { CloseCaptionsListBox } from './components/subtitlesettings/closecaptionslistbox';
+import { BritboxPlaybackToggleOverlay } from './components/britboxplaybacktoggleoverlay';
 
 export namespace UIFactory {
   export function buildDefaultUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
@@ -416,6 +417,7 @@ export namespace UIFactory {
       components: [
         subtitleOverlay,
         new BufferingOverlay(),
+        new BritboxPlaybackToggleOverlay(),
         controlBar,
         new Advisory({
           components: [

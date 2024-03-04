@@ -1,5 +1,5 @@
-@import "../variables";
-@import "../mixins";
+@import '../variables';
+@import '../mixins';
 
 .#{$prefix}-ui-uicontainer {
   .#{$prefix}-ui-subtitle-overlay {
@@ -33,11 +33,26 @@
     .#{$prefix}-subtitle-region-container {
       position: absolute;
 
+      &.#{$prefix}-subtitle-position-vtt {
+        bottom: 2em;
+        left: 0 !important;
+        right: 0 !important;
+        top: initial !important;
+
+        > .#{$prefix}-container-wrapper > span {
+          top: initial !important;
+        }
+      }
+
       &.#{$prefix}-subtitle-position-default {
         bottom: 2em;
-        left: 3em;
-        right: 3em;
-        top: initial;
+        left: 0 !important;
+        right: 0 !important;
+        top: initial !important;
+
+        > .#{$prefix}-container-wrapper > span {
+          top: initial !important;
+        }
       }
 
       &.#{$prefix}-subtitle-position-bottom > div {
@@ -56,7 +71,7 @@
       // Break labels into separate lines
       // sass-lint:disable force-pseudo-nesting
       &:nth-child(1n-1)::after {
-        content: "\A";
+        content: '\A';
         // VTT flex styling can increase this elements height, making the background larger
         height: 0;
         white-space: pre-line;

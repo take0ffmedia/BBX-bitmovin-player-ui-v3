@@ -630,12 +630,10 @@
     }
   }
 
-  &.#{$prefix}-controls-hidden {
-    .#{$prefix}-ui-playbacktoggle-overlay {
-      .#{$prefix}-ui-hugeplaybacktogglebutton {
-        .#{$prefix}-image {
-          opacity: 0;
-        }
+  .#{$prefix}-ui-playbacktoggle-overlay {
+    .#{$prefix}-ui-hugeplaybacktogglebutton {
+      .#{$prefix}-image {
+        opacity: 0;
       }
     }
   }
