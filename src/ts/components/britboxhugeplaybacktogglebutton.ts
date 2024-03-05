@@ -28,13 +28,13 @@ export class BritboxHugePlaybackToggleButton extends PlaybackToggleButton {
     // Update button state through API events
     super.configure(player, uimanager, false);
 
-    // let togglePlayback = () => {
-    //   if (player.isPlaying() || this.isPlayInitiated) {
-    //     player.pause('ui');
-    //   } else {
-    //     player.play('ui');
-    //   }
-    // };
+    let togglePlayback = () => {
+      if (player.isPlaying() || this.isPlayInitiated) {
+        uimanager.getUI().hideUi();
+      } else {
+        uimanager.getUI().showUi();
+      }
+    };
 
     let toggleFullscreen = () => {
       if (player.getViewMode() === player.exports.ViewMode.Fullscreen) {
@@ -74,7 +74,7 @@ export class BritboxHugePlaybackToggleButton extends PlaybackToggleButton {
         // If we disable the flag here, onClick was triggered programmatically instead of by a user interaction, and
         // playback is blocked (e.g. on mobile devices due to the programmatic play() call), we loose the chance to
         // ever start playback through a user interaction again with this button.
-        // togglePlayback();
+        togglePlayback();
         return;
       }
 
@@ -88,19 +88,19 @@ export class BritboxHugePlaybackToggleButton extends PlaybackToggleButton {
       } else if (now - clickTime < 500) {
         // We have a double click inside the 500ms interval, undo playback toggle and toggle fullscreen mode
         toggleFullscreen();
-        // togglePlayback();
+        togglePlayback();
         doubleClickTime = now;
         return;
       }
 
       clickTime = now;
 
-      // setTimeout(() => {
-      //   if (Date.now() - doubleClickTime > 200) {
-      //     // No double click detected, so we toggle playback and wait what happens next
-      //     togglePlayback();
-      //   }
-      // }, 200);
+      setTimeout(() => {
+        if (Date.now() - doubleClickTime > 200) {
+          // No double click detected, so we toggle playback and wait what happens next
+          togglePlayback();
+        }
+      }, 200);
     });
 
     player.on(player.exports.PlayerEvent.Play, () => {
