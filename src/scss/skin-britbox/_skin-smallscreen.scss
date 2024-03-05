@@ -627,6 +627,9 @@
           display: none;
         }
       }
+      .#{$prefix}-ui-controlbar {
+        display: none;
+      }
     }
   }
 

@@ -28,7 +28,12 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
       });
 
       this.onClick.subscribe(() => {
-        alert(true);
+        const duration = player.getDuration();
+        const currentTime = player.getCurrentTime();
+        const newTime = currentTime + 10;
+        if (newTime < duration) {
+          player.seek(newTime);
+        }
         let result = window.bitmovin.customMessageHandler.sendSynchronous('forwardButton');
         console.log('Return value from native:', result);
         window.bitmovin.customMessageHandler.sendAsynchronous('forwardButtonAsync');

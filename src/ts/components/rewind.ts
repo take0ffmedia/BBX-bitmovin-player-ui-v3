@@ -29,7 +29,11 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
       });
 
       this.onClick.subscribe(() => {
-        alert(true);
+        const currentTime = player.getCurrentTime();
+        const newTime = currentTime - 10;
+        if (newTime > 0) {
+          player.seek(newTime);
+        }
         let result = window.bitmovin.customMessageHandler.sendSynchronous('rewindButton');
         console.log('Return value from native:', result);
         window.bitmovin.customMessageHandler.sendAsynchronous('rewindButtonAsync');

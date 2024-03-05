@@ -418,6 +418,7 @@ export namespace UIFactory {
         subtitleOverlay,
         new BufferingOverlay(),
         new BritboxPlaybackToggleOverlay(),
+        new RecommendationOverlay(),
         controlBar,
         new Advisory({
           components: [

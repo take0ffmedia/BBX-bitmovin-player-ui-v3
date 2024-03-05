@@ -1,5 +1,5 @@
-@import "../variables";
-@import "../mixins";
+@import '../variables';
+@import '../mixins';
 
 .#{$prefix}-ui-recommendation-overlay {
   @extend %ui-container;
@@ -8,7 +8,8 @@
   @include layout-center-children-in-container;
   @include hidden-animated($animation-duration * 2);
 
-  background-color: $color-background-highlight;
+  // background-color: $color-background-highlight;
+  background-color: #171b23;
 
   > .#{$prefix}-container-wrapper {
     padding: 3em;
