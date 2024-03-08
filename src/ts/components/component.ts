@@ -1,7 +1,7 @@
-import {Guid} from '../guid';
-import {DOM} from '../dom';
-import {EventDispatcher, NoArgs, Event} from '../eventdispatcher';
-import {UIInstanceManager} from '../uimanager';
+import { Guid } from '../guid';
+import { DOM } from '../dom';
+import { EventDispatcher, NoArgs, Event } from '../eventdispatcher';
+import { UIInstanceManager } from '../uimanager';
 import { PlayerAPI } from 'bitmovin-player';
 import { i18n, LocalizableText } from '../localization/i18n';
 
@@ -76,7 +76,6 @@ export interface ComponentHoverChangedEventArgs extends NoArgs {
  * Each component must extend this class and optionally the config interface.
  */
 export class Component<Config extends ComponentConfig> {
-
   /**
    * The classname that is attached to the element when it is in the hidden state.
    * @type {string}
@@ -147,29 +146,29 @@ export class Component<Config extends ComponentConfig> {
    * <code>
    * // Define an example component class with an example event
    * class ExampleComponent extends Component<ComponentConfig> {
-     *
-     *     private exampleComponentEvents = {
-     *         onExampleAction: new EventDispatcher<ExampleComponent, NoArgs>()
-     *     }
-     *
-     *     // constructor and other stuff...
-     *
-     *     protected onExampleActionEvent() {
-     *        this.exampleComponentEvents.onExampleAction.dispatch(this);
-     *    }
-     *
-     *    get onExampleAction(): Event<ExampleComponent, NoArgs> {
-     *        return this.exampleComponentEvents.onExampleAction.getEvent();
-     *    }
-     * }
+   *
+   *     private exampleComponentEvents = {
+   *         onExampleAction: new EventDispatcher<ExampleComponent, NoArgs>()
+   *     }
+   *
+   *     // constructor and other stuff...
+   *
+   *     protected onExampleActionEvent() {
+   *        this.exampleComponentEvents.onExampleAction.dispatch(this);
+   *    }
+   *
+   *    get onExampleAction(): Event<ExampleComponent, NoArgs> {
+   *        return this.exampleComponentEvents.onExampleAction.getEvent();
+   *    }
+   * }
    *
    * // Create an instance of the component somewhere
    * var exampleComponentInstance = new ExampleComponent();
    *
    * // Subscribe to the example event on the component
    * exampleComponentInstance.onExampleAction.subscribe(function (sender: ExampleComponent) {
-     *     console.log('onExampleAction of ' + sender + ' has fired!');
-     * });
+   *     console.log('onExampleAction of ' + sender + ' has fired!');
+   * });
    * </code>
    */
   private componentEvents = {
@@ -187,15 +186,19 @@ export class Component<Config extends ComponentConfig> {
    */
   constructor(config: ComponentConfig = {}) {
     // Create the configuration for this component
-    this.config = <Config>this.mergeConfig(config, {
-      tag: 'div',
-      id: '{{PREFIX}}-id-' + Guid.next(),
-      cssPrefix: '{{PREFIX}}',
-      cssClass: 'ui-component',
-      cssClasses: [],
-      hidden: false,
-      disabled: false,
-    }, {});
+    this.config = <Config>this.mergeConfig(
+      config,
+      {
+        tag: 'div',
+        id: '{{PREFIX}}-id-' + Guid.next(),
+        cssPrefix: '{{PREFIX}}',
+        cssClass: 'ui-component',
+        cssClasses: [],
+        hidden: false,
+        disabled: false,
+      },
+      {},
+    );
   }
 
   /**
@@ -269,9 +272,9 @@ export class Component<Config extends ComponentConfig> {
    */
   protected toDomElement(): DOM {
     let element = new DOM(this.config.tag, {
-      'id': this.config.id,
-      'class': this.getCssClasses(),
-      'role': this.config.role,
+      id: this.config.id,
+      class: this.getCssClasses(),
+      role: this.config.role,
     });
 
     return element;

@@ -40,5 +40,8 @@ export class PlayButton extends ToggleButton<ToggleButtonConfig> {
     };
 
     init();
+
+    player.on(player.exports.PlayerEvent.Seek, () => this.disable());
+    player.on(player.exports.PlayerEvent.Seeked, () => this.enable());
   }
 }

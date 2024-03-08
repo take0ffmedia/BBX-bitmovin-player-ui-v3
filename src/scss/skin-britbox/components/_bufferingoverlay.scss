@@ -19,7 +19,7 @@
   @include layout-cover;
   @include hidden-animated($animation-duration * 2);
 
-  background-color: $color-background-highlight;
+  background-color: $color-black;
 
   > .#{$prefix}-container-wrapper {
     padding: 3em;
@@ -36,7 +36,7 @@
 
   .#{$prefix}-ui-buffering-overlay-indicator {
     $buffering-animation-duration: 2s;
-    $buffering-animation-delay: $buffering-animation-duration * .1;
+    $buffering-animation-delay: $buffering-animation-duration * 0.1;
 
     @keyframes #{$prefix}-fancy {
       0% {
@@ -67,7 +67,7 @@
     background: url('../../assets/skin-modern/images/loader.svg') no-repeat center;
     display: inline-block;
     height: 2em;
-    margin: .2em;
+    margin: 0.2em;
     width: 2em;
 
     @for $i from 1 through 3 {

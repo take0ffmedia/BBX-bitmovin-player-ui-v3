@@ -1,3 +1,4 @@
+import { LoadingOverlay } from './components/loadingoverlay';
 import { SubtitleOverlay } from './components/subtitleoverlay';
 import { SettingsPanelPage } from './components/settingspanelpage';
 import { SettingsPanelItem } from './components/settingspanelitem';
@@ -416,7 +417,18 @@ export namespace UIFactory {
     return new UIContainer({
       components: [
         subtitleOverlay,
+        new TitleBar({
+          hidden: false,
+          keepWithError: true,
+          components: [
+            new Container({
+              components: [new CustomCloseButton()],
+              cssClass: 'ui-actions left back',
+            }),
+          ],
+        }),
         new BufferingOverlay(),
+        new LoadingOverlay(),
         new BritboxPlaybackToggleOverlay(),
         new RecommendationOverlay(),
         controlBar,
@@ -438,7 +450,7 @@ export namespace UIFactory {
         new TitleBar({
           components: [
             new Container({
-              components: [new CustomCloseButton()],
+              components: [],
               cssClass: 'ui-actions left',
             }),
             new Container({
@@ -461,7 +473,9 @@ export namespace UIFactory {
           ],
         }),
         settingsPanel,
-        new ErrorMessageOverlay(),
+        new ErrorMessageOverlay({
+          hidden: false,
+        }),
       ],
       cssClasses: ['ui-skin-smallscreen', 'britbox'],
       hideDelay: 2000,

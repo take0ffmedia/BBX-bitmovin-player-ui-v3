@@ -1,8 +1,8 @@
-import {ContainerConfig, Container} from './container';
-import {UIInstanceManager} from '../uimanager';
-import {DOM} from '../dom';
-import {Timeout} from '../timeout';
-import {PlayerUtils} from '../playerutils';
+import { ContainerConfig, Container } from './container';
+import { UIInstanceManager } from '../uimanager';
+import { DOM } from '../dom';
+import { Timeout } from '../timeout';
+import { PlayerUtils } from '../playerutils';
 import { CancelEventArgs, EventDispatcher } from '../eventdispatcher';
 import { PlayerAPI, PlayerResizedEvent } from 'bitmovin-player';
 import { i18n } from '../localization/i18n';
@@ -34,7 +34,6 @@ export interface UIContainerConfig extends ContainerConfig {
  * setup the UI.
  */
 export class UIContainer extends Container<UIContainerConfig> {
-
   private static readonly STATE_PREFIX = 'player-state-';
 
   private static readonly FULLSCREEN = 'fullscreen';
@@ -47,20 +46,27 @@ export class UIContainer extends Container<UIContainerConfig> {
   private playerStateChange: EventDispatcher<UIContainer, PlayerUtils.PlayerState>;
 
   private userInteractionEventSource: DOM;
-  private userInteractionEvents: { name: string, handler: EventListenerOrEventListenerObject }[];
+  private userInteractionEvents: { name: string; handler: EventListenerOrEventListenerObject }[];
 
   public hideUi: () => void = () => {};
   public showUi: () => void = () => {};
 
+  public hideLoading: () => void = () => {};
+  public showLoading: () => void = () => {};
+
   constructor(config: UIContainerConfig) {
     super(config);
 
-    this.config = this.mergeConfig(config, <UIContainerConfig>{
-      cssClass: 'ui-uicontainer',
-      role: 'region',
-      ariaLabel: i18n.getLocalizer('player'),
-      hideDelay: 5000,
-    }, this.config);
+    this.config = this.mergeConfig(
+      config,
+      <UIContainerConfig>{
+        cssClass: 'ui-uicontainer',
+        role: 'region',
+        ariaLabel: i18n.getLocalizer('player'),
+        hideDelay: 5000,
+      },
+      this.config,
+    );
 
     this.playerStateChange = new EventDispatcher<UIContainer, PlayerUtils.PlayerState>();
   }
@@ -94,7 +100,10 @@ export class UIContainer extends Container<UIContainerConfig> {
     let playerState: PlayerUtils.PlayerState;
 
     const hidingPrevented = (): boolean => {
-      return config.hidePlayerStateExceptions && config.hidePlayerStateExceptions.indexOf(playerState) > -1;
+      return (
+        config.hidePlayerStateExceptions &&
+        config.hidePlayerStateExceptions.indexOf(playerState) > -1
+      );
     };
 
     this.showUi = () => {
@@ -107,6 +116,11 @@ export class UIContainer extends Container<UIContainerConfig> {
       if (!isSeeking && !player.isCasting() && !hidingPrevented()) {
         this.uiHideTimeout.start();
       }
+    };
+
+    this.showLoading = () => {
+      // Let subscribers know that they should reveal themselves
+      uimanager.onLoadingShow.dispatch(this);
     };
 
     this.hideUi = () => {
@@ -127,61 +141,74 @@ export class UIContainer extends Container<UIContainerConfig> {
       }
     };
 
+    this.hideLoading = () => {
+      uimanager.onLoadingHide.dispatch(this);
+    };
+
     // Timeout to defer UI hiding by the configured delay time
     this.uiHideTimeout = new Timeout(config.hideDelay, this.hideUi);
 
-    this.userInteractionEvents = [{
-      // On touch displays, the first touch reveals the UI
-      name: 'touchend',
-      handler: (e) => {
-        if (!isUiShown) {
-          // Only if the UI is hidden, we prevent other actions (except for the first touch) and reveal the UI
-          // instead. The first touch is not prevented to let other listeners receive the event and trigger an
-          // initial action, e.g. the huge playback button can directly start playback instead of requiring a double
-          // tap which 1. reveals the UI and 2. starts playback.
-          if (isFirstTouch && !player.isPlaying()) {
-            isFirstTouch = false;
-          } else {
-            e.preventDefault();
+    this.userInteractionEvents = [
+      {
+        // On touch displays, the first touch reveals the UI
+        name: 'touchend',
+        handler: (e) => {
+          if (!isUiShown) {
+            // Only if the UI is hidden, we prevent other actions (except for the first touch) and reveal the UI
+            // instead. The first touch is not prevented to let other listeners receive the event and trigger an
+            // initial action, e.g. the huge playback button can directly start playback instead of requiring a double
+            // tap which 1. reveals the UI and 2. starts playback.
+            if (isFirstTouch && !player.isPlaying()) {
+              isFirstTouch = false;
+            } else {
+              e.preventDefault();
+            }
+            this.showUi();
           }
+        },
+      },
+      {
+        // When the mouse enters, we show the UI
+        name: 'mouseenter',
+        handler: () => {
           this.showUi();
-        }
+        },
       },
-    }, {
-      // When the mouse enters, we show the UI
-      name: 'mouseenter',
-      handler: () => {
-        this.showUi();
+      {
+        // When the mouse moves within, we show the UI
+        name: 'mousemove',
+        handler: () => {
+          this.showUi();
+        },
       },
-    }, {
-      // When the mouse moves within, we show the UI
-      name: 'mousemove',
-      handler: () => {
-        this.showUi();
+      {
+        name: 'focusin',
+        handler: () => {
+          this.showUi();
+        },
       },
-    }, {
-      name: 'focusin',
-      handler: () => {
-        this.showUi();
+      {
+        name: 'keydown',
+        handler: () => {
+          this.showUi();
+        },
       },
-    }, {
-      name: 'keydown',
-      handler: () => {
-        this.showUi();
+      {
+        // When the mouse leaves, we can prepare to hide the UI, except a seek is going on
+        name: 'mouseleave',
+        handler: () => {
+          // When a seek is going on, the seek scrub pointer may exit the UI area while still seeking, and we do not
+          // hide the UI in such cases
+          if (!isSeeking && !hidingPrevented()) {
+            this.uiHideTimeout.start();
+          }
+        },
       },
-    }, {
-      // When the mouse leaves, we can prepare to hide the UI, except a seek is going on
-      name: 'mouseleave',
-      handler: () => {
-        // When a seek is going on, the seek scrub pointer may exit the UI area while still seeking, and we do not
-        // hide the UI in such cases
-        if (!isSeeking && !hidingPrevented()) {
-          this.uiHideTimeout.start();
-        }
-      },
-    }];
+    ];
 
-    this.userInteractionEvents.forEach((event) => this.userInteractionEventSource.on(event.name, event.handler));
+    this.userInteractionEvents.forEach((event) =>
+      this.userInteractionEventSource.on(event.name, event.handler),
+    );
 
     uimanager.onSeek.subscribe(() => {
       this.uiHideTimeout.clear(); // Don't hide UI while a seek is in progress
@@ -217,8 +244,9 @@ export class UIContainer extends Container<UIContainerConfig> {
     for (let state in PlayerUtils.PlayerState) {
       if (isNaN(Number(state))) {
         let enumName = PlayerUtils.PlayerState[<any>PlayerUtils.PlayerState[state]];
-        stateClassNames[PlayerUtils.PlayerState[state]] =
-          this.prefixCss(UIContainer.STATE_PREFIX + enumName.toLowerCase());
+        stateClassNames[PlayerUtils.PlayerState[state]] = this.prefixCss(
+          UIContainer.STATE_PREFIX + enumName.toLowerCase(),
+        );
       }
     }
 
@@ -330,14 +358,19 @@ export class UIContainer extends Container<UIContainerConfig> {
       updateLayoutSizeClasses(width, height);
     });
     // Init layout state
-    updateLayoutSizeClasses(new DOM(player.getContainer()).width(), new DOM(player.getContainer()).height());
+    updateLayoutSizeClasses(
+      new DOM(player.getContainer()).width(),
+      new DOM(player.getContainer()).height(),
+    );
   }
 
   release(): void {
     // Explicitly unsubscribe user interaction event handlers because they could be attached to an external element
     // that isn't owned by the UI and therefore not removed on release.
     if (this.userInteractionEvents) {
-      this.userInteractionEvents.forEach((event) => this.userInteractionEventSource.off(event.name, event.handler));
+      this.userInteractionEvents.forEach((event) =>
+        this.userInteractionEventSource.off(event.name, event.handler),
+      );
     }
 
     super.release();

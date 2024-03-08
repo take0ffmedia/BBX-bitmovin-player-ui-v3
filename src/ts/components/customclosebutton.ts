@@ -34,5 +34,11 @@ export class CustomCloseButton extends ToggleButton<ToggleButtonConfig> {
         window.bitmovin.customMessageHandler.sendAsynchronous('closePlayerAsync');
       });
     }
+
+    const handlerError = () => {
+      this.enable();
+    };
+
+    player.on(player.exports.PlayerEvent.Error, handlerError);
   }
 }

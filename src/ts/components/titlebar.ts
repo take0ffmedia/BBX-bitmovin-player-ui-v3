@@ -1,7 +1,7 @@
-import {Container, ContainerConfig} from './container';
-import {UIInstanceManager} from '../uimanager';
-import {MetadataLabel, MetadataLabelContent} from './metadatalabel';
-import { PlayerAPI } from 'bitmovin-player';
+import { Container, ContainerConfig } from './container';
+import { UIInstanceManager } from '../uimanager';
+import { MetadataLabel, MetadataLabelContent } from './metadatalabel';
+import { PlayerAPI, WarningEvent } from 'bitmovin-player';
 
 /**
  * Configuration interface for a {@link TitleBar}.
@@ -13,25 +13,29 @@ export interface TitleBarConfig extends ContainerConfig {
    * Default: false
    */
   keepHiddenWithoutMetadata?: boolean;
+  keepWithError?: boolean;
 }
 
 /**
  * Displays a title bar containing a label with the title of the video.
  */
 export class TitleBar extends Container<TitleBarConfig> {
-
   constructor(config: TitleBarConfig = {}) {
     super(config);
 
-    this.config = this.mergeConfig(config, {
-      cssClass: 'ui-titlebar',
-      hidden: true,
-      components: [
-        new MetadataLabel({ content: MetadataLabelContent.Title }),
-        new MetadataLabel({ content: MetadataLabelContent.Description }),
-      ],
-      keepHiddenWithoutMetadata: false,
-    }, <TitleBarConfig>this.config);
+    this.config = this.mergeConfig(
+      config,
+      {
+        cssClass: 'ui-titlebar',
+        hidden: true,
+        components: [
+          new MetadataLabel({ content: MetadataLabelContent.Title }),
+          new MetadataLabel({ content: MetadataLabelContent.Description }),
+        ],
+        keepHiddenWithoutMetadata: false,
+      },
+      <TitleBarConfig>this.config,
+    );
   }
 
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {
@@ -40,6 +44,7 @@ export class TitleBar extends Container<TitleBarConfig> {
     let config = this.getConfig();
     let shouldBeShown = !this.isHidden();
     let hasMetadataText = true; // Flag to track if any metadata label contains text
+    let errorOccured = false;
 
     let checkMetadataTextAndUpdateVisibility = () => {
       hasMetadataText = false;
@@ -80,10 +85,27 @@ export class TitleBar extends Container<TitleBarConfig> {
     });
     uimanager.onControlsHide.subscribe(() => {
       shouldBeShown = false;
-      this.hide();
+      if (!errorOccured) {
+        this.hide();
+      }
     });
 
     // init
     checkMetadataTextAndUpdateVisibility();
+
+    const checkErrorVisibility = () => {
+      if (config.keepWithError) {
+        errorOccured = true;
+        this.show();
+      }
+    };
+
+    player.on(player.exports.PlayerEvent.Error, checkErrorVisibility);
+
+    player.on(player.exports.PlayerEvent.Warning, (event: WarningEvent) => {
+      if (event.code === player.exports.WarningCode.PLAYBACK_COULD_NOT_BE_STARTED) {
+        checkErrorVisibility();
+      }
+    });
   }
 }

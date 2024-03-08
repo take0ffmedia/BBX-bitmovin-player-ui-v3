@@ -136,6 +136,9 @@
             justify-content: flex-start;
           }
         }
+        &.back {
+          z-index: 6;
+        }
       }
     }
   }
@@ -459,17 +462,16 @@
   }
 
   .#{$prefix}-ui-buffering-overlay {
-    background-color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    z-index: 1;
     .#{$prefix}-container-wrapper {
       .#{$prefix}-ui-buffering-overlay-loading {
         background-image: url('../../assets/skin-britbox/images/loading.svg');
         background-repeat: no-repeat;
         background-size: 64px;
-        background-color: #000000;
+        background-color: $color-black;
         height: 64px;
         width: 64px;
         display: flex;

@@ -1,12 +1,14 @@
-import {ContainerConfig, Container} from './container';
-import {Label, LabelConfig} from './label';
-import {UIInstanceManager} from '../uimanager';
-import {TvNoiseCanvas} from './tvnoisecanvas';
+import { ContainerConfig, Container } from './container';
+import { Label, LabelConfig } from './label';
+import { UIInstanceManager } from '../uimanager';
 import { ErrorUtils } from '../errorutils';
 import { ErrorEvent, PlayerAPI, PlayerEventBase } from 'bitmovin-player';
 import {
   isMobileV3PlayerAPI,
-  MobileV3PlayerAPI, MobileV3PlayerErrorEvent, MobileV3PlayerEvent, MobileV3SourceErrorEvent,
+  MobileV3PlayerAPI,
+  MobileV3PlayerErrorEvent,
+  MobileV3PlayerEvent,
+  MobileV3SourceErrorEvent,
 } from '../mobilev3playerapi';
 
 export interface ErrorMessageTranslator {
@@ -82,21 +84,22 @@ export interface ErrorMessageOverlayConfig extends ContainerConfig {
  * Overlays the player and displays error messages.
  */
 export class ErrorMessageOverlay extends Container<ErrorMessageOverlayConfig> {
-
   private errorLabel: Label<LabelConfig>;
-  private tvNoiseBackground: TvNoiseCanvas;
 
   constructor(config: ErrorMessageOverlayConfig = {}) {
     super(config);
 
     this.errorLabel = new Label<LabelConfig>({ cssClass: 'ui-errormessage-label' });
-    this.tvNoiseBackground = new TvNoiseCanvas();
 
-    this.config = this.mergeConfig(config, {
-      cssClass: 'ui-errormessage-overlay',
-      components: [this.tvNoiseBackground, this.errorLabel],
-      hidden: true,
-    }, this.config);
+    this.config = this.mergeConfig(
+      config,
+      {
+        cssClass: 'ui-errormessage-overlay',
+        components: [this.errorLabel],
+        hidden: true,
+      },
+      this.config,
+    );
   }
 
   configure(player: PlayerAPI | MobileV3PlayerAPI, uimanager: UIInstanceManager): void {
@@ -108,7 +111,10 @@ export class ErrorMessageOverlay extends Container<ErrorMessageOverlayConfig> {
       event: ErrorEvent | MobileV3SourceErrorEvent | MobileV3PlayerErrorEvent,
       message: string,
     ) => {
-      const customizedMessage = customizeErrorMessage(uimanager.getConfig().errorMessages || config.messages, event);
+      const customizedMessage = customizeErrorMessage(
+        uimanager.getConfig().errorMessages || config.messages,
+        event,
+      );
       if (customizedMessage) {
         message = customizedMessage;
       }
@@ -133,7 +139,6 @@ export class ErrorMessageOverlay extends Container<ErrorMessageOverlayConfig> {
 
     player.on(player.exports.PlayerEvent.SourceLoaded, (event: PlayerEventBase) => {
       if (this.isShown()) {
-        this.tvNoiseBackground.stop();
         this.hide();
       }
     });
@@ -141,15 +146,11 @@ export class ErrorMessageOverlay extends Container<ErrorMessageOverlayConfig> {
 
   display(errorMessage: string): void {
     this.errorLabel.setText(errorMessage);
-    this.tvNoiseBackground.start();
     this.show();
   }
 
   release(): void {
     super.release();
-
-    // Canvas rendering must be explicitly stopped, else it just continues forever and hogs resources
-    this.tvNoiseBackground.stop();
   }
 }
 

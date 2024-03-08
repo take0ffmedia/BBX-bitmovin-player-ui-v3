@@ -32,8 +32,7 @@ export class NextEpisodeButton extends ToggleButton<ToggleButtonConfig> {
     let init = () => {
       if (
         (player.getSource()?.metadata?.hasNextEpisode || '').toString() === 'false' ||
-        !player.getSource()?.metadata?.hasNextEpisode ||
-        (player.getSource()?.metadata?.isLiveStream || '').toString() === 'true'
+        !player.getSource()?.metadata?.hasNextEpisode
       ) {
         this.disable();
       } else {
@@ -54,6 +53,8 @@ export class NextEpisodeButton extends ToggleButton<ToggleButtonConfig> {
         if (player.isPlaying()) {
           player.pause();
         }
+        uimanager.getUI().hideUi();
+        uimanager.getUI().showLoading();
         let result = window.bitmovin.customMessageHandler.sendSynchronous('nextEpisode');
         console.log('Return value from native:', result);
         window.bitmovin.customMessageHandler.sendAsynchronous('nextEpisodeAsync');

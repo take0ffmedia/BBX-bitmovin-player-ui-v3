@@ -33,7 +33,7 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container bmui-britbox">
       <div class="content">
         <a href="index.html"><- Back to playground</a>
         <div class="player-wrapper">
@@ -43,7 +43,7 @@
     </div>
     <script type="text/javascript">
       var conf = {
-        key: "",
+        key: '',
         ui: false,
         playback: {
           muted: true,
@@ -52,24 +52,19 @@
       };
 
       var source = {
-        dash: "//bitdash-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd",
-        hls: "//bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8",
+        dash: '//bitdash-a.akamaihd.net/content/MI201109210084_1/mpds/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.mpd',
+        hls: '//bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
         progressive:
-          "//bitdash-a.akamaihd.net/content/MI201109210084_1/MI201109210084_mpeg-4_hd_high_1080p25_10mbits.mp4",
-        poster:
-          "//bitdash-a.akamaihd.net/content/art-of-motion_drm/art-of-motion_poster.jpg",
+          '//bitdash-a.akamaihd.net/content/MI201109210084_1/MI201109210084_mpeg-4_hd_high_1080p25_10mbits.mp4',
+        poster: '//bitdash-a.akamaihd.net/content/art-of-motion_drm/art-of-motion_poster.jpg',
         thumbnailTrack: {
-          url: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/thumbnails/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.vtt",
+          url: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/thumbnails/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.vtt',
         },
-        title: "Sintel",
-        description:
-          "A woman, Sintel, is attacked while traveling through a wintry mountainside.",
+        title: 'Sintel',
+        description: 'A woman, Sintel, is attacked while traveling through a wintry mountainside.',
       };
 
-      var player = new bitmovin.player.Player(
-        document.getElementById("player"),
-        conf
-      );
+      var player = new bitmovin.player.Player(document.getElementById('player'), conf);
       var uiManager = bitmovin.playerui.UIFactory.buildDefaultUI(player, {});
       player.load(source);
     </script>
