@@ -91,7 +91,7 @@ export { ReplayButton } from './components/replaybutton';
 // Object.assign polyfill for ES5/IE9
 // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 if (typeof Object.assign !== 'function') {
-  Object.assign = function(target: any) {
+  Object.assign = function (target: any) {
     'use strict';
     if (target == null) {
       throw new TypeError('Cannot convert undefined or null to object');

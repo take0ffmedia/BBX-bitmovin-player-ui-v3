@@ -6,7 +6,6 @@
     "declaration": true,
     "outDir": "dist/js/framework",
     "lib": ["es6", "dom", "scripthost"],
-    // To be able to import Json Files.
     "resolveJsonModule": true,
     "esModuleInterop": true
   }

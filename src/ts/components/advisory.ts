@@ -54,5 +54,11 @@ export class Advisory extends Container<AdvisoryConfig> {
     uimanager.getConfig().events.onUpdated.subscribe(() => {
       init();
     });
+
+    uimanager.onLoadingShow.subscribe(() => {
+      overlayShowTimeout.clear();
+      overlayHideTimeout.clear();
+      this.hide();
+    });
   }
 }

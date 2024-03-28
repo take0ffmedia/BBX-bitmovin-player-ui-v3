@@ -17,6 +17,12 @@
 .#{$prefix}-britbox {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
+  > .#{$prefix}-container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
   .#{$prefix}-ui-chromecast {
     @extend %ui-button;
 
@@ -40,12 +46,11 @@
   }
   .#{$prefix}-britbox-controls {
     display: flex;
-    justify-content: center;
-    top: 50%;
-    position: absolute;
-    width: 100%;
-    transform: translateY(-50%);
     transition: opacity 0.3s;
+    > .#{$prefix}-container-wrapper {
+      display: flex;
+      gap: 70px;
+    }
     &.#{$prefix}-hidden {
       opacity: 0;
     }
@@ -55,6 +60,8 @@
       height: 4.8em;
       background-size: cover;
       background-color: transparent;
+      position: relative;
+      z-index: 2;
       > span {
         display: none;
       }
@@ -78,7 +85,6 @@
       }
     }
     .#{$prefix}-ui-play {
-      margin: 0 70px;
       &.#{$prefix}-on {
         background-image: url('../../assets/skin-britbox/images/pause.svg');
       }
@@ -88,6 +94,11 @@
     }
   }
   .#{$prefix}-ui-titlebar {
+    z-index: 2;
+    &.titlebar-back {
+      z-index: 3;
+      background: none;
+    }
     .#{$prefix}-ui-customclosetogglebutton {
       background-image: url('../../assets/skin-britbox/images/arrow-back-browser.svg');
       background-color: transparent;
@@ -265,7 +276,7 @@
     @include layout-cover;
     @include layout-center-children-in-container;
     background-color: #00202b;
-    z-index: 2;
+    z-index: 20;
 
     .#{$prefix}-ui-label {
       font-family: MuseoSans-700, sans-serif;
@@ -274,7 +285,6 @@
 
     .#{$prefix}-ui-settings-panel-page {
       padding: unquote('max(2.0em, env(safe-area-inset-top)) 0');
-
       &.#{$prefix}-active {
         > .#{$prefix}-container-wrapper {
           display: flex;
@@ -465,6 +475,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: $color-black;
     z-index: 1;
     .#{$prefix}-container-wrapper {
       .#{$prefix}-ui-buffering-overlay-loading {
@@ -478,7 +489,7 @@
         justify-content: center;
         align-items: center;
         position: relative;
-        z-index: 2;
+        z-index: 10;
       }
     }
 
@@ -615,14 +626,6 @@
   }
 
   &.#{$prefix}-ui-uicontainer {
-    .#{$prefix}-ui-buffering-overlay {
-      ~ .#{$prefix}-britbox-controls {
-        display: none;
-      }
-      &.#{$prefix}-hidden ~ .#{$prefix}-britbox-controls {
-        display: flex;
-      }
-    }
     &.#{$prefix}-player-state-finished {
       .#{$prefix}-ui-buffering-overlay {
         ~ .#{$prefix}-britbox-controls {

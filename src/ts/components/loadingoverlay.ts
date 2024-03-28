@@ -3,6 +3,7 @@ import { UIInstanceManager } from '../uimanager';
 import { Component, ComponentConfig } from './component';
 import { Timeout } from '../timeout';
 import { PlayerAPI } from 'bitmovin-player';
+declare const window: any;
 
 /**
  * Configuration interface for the {@link LoadingOverlay} component.
@@ -61,15 +62,29 @@ export class LoadingOverlay extends Container<LoadingOverlayConfig> {
       this.hide();
     };
 
-    player.on(player.exports.PlayerEvent.Playing, hideOverlay);
+    player.on(player.exports.PlayerEvent.SourceLoaded, () => {
+      uimanager.getUI().hideLoading();
+      uimanager.getUI().showUi();
+    });
 
     uimanager.onLoadingShow.subscribe(() => {
       showOverlay();
       this.show();
     });
 
-    uimanager.onLoadingShow.subscribe(() => {
-      this.hide();
+    uimanager.onLoadingHide.subscribe(() => {
+      hideOverlay();
     });
+
+    if (window.bitmovin.customMessageHandler) {
+      window.bitmovin.customMessageHandler.on('showLoading', (data?: string) => {
+        uimanager.getUI().hideUi();
+        uimanager.getUI().showLoading();
+      });
+      window.bitmovin.customMessageHandler.on('hideLoading', (data?: string) => {
+        uimanager.getUI().hideLoading();
+        uimanager.getUI().showUi();
+      });
+    }
   }
 }

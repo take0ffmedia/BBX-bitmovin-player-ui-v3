@@ -97,6 +97,7 @@ export class UIContainer extends Container<UIContainerConfig> {
     let isUiShown = false;
     let isSeeking = false;
     let isFirstTouch = true;
+    let isShowLoading = true;
     let playerState: PlayerUtils.PlayerState;
 
     const hidingPrevented = (): boolean => {
@@ -107,7 +108,7 @@ export class UIContainer extends Container<UIContainerConfig> {
     };
 
     this.showUi = () => {
-      if (!isUiShown) {
+      if (!isUiShown && !isShowLoading) {
         // Let subscribers know that they should reveal themselves
         uimanager.onControlsShow.dispatch(this);
         isUiShown = true;
@@ -120,6 +121,7 @@ export class UIContainer extends Container<UIContainerConfig> {
 
     this.showLoading = () => {
       // Let subscribers know that they should reveal themselves
+      isShowLoading = true;
       uimanager.onLoadingShow.dispatch(this);
     };
 
@@ -142,6 +144,7 @@ export class UIContainer extends Container<UIContainerConfig> {
     };
 
     this.hideLoading = () => {
+      isShowLoading = false;
       uimanager.onLoadingHide.dispatch(this);
     };
 

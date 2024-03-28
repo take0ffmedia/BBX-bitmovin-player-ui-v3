@@ -389,6 +389,7 @@ export namespace UIFactory {
     subtitleSettingsPanelPage.addComponent(new CloseButton({ target: settingsPanel }));
 
     let controlBar = new ControlBar({
+      hidden: true,
       components: [
         new Container({
           components: [
@@ -426,9 +427,12 @@ export namespace UIFactory {
               cssClass: 'ui-actions left back',
             }),
           ],
+          cssClass: 'ui-titlebar titlebar-back',
         }),
         new BufferingOverlay(),
-        new LoadingOverlay(),
+        new LoadingOverlay({
+          showDelayMs: 0,
+        }),
         new BritboxPlaybackToggleOverlay(),
         new RecommendationOverlay(),
         controlBar,

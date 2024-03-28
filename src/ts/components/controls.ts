@@ -64,5 +64,8 @@ export class Controls extends Container<ControlsConfig> {
 
     // init
     checkMetadataTextAndUpdateVisibility();
+
+    player.on(player.exports.PlayerEvent.Seek, () => this.hide());
+    player.on(player.exports.PlayerEvent.Seeked, () => this.show());
   }
 }

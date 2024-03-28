@@ -107,5 +107,11 @@ export class TitleBar extends Container<TitleBarConfig> {
         checkErrorVisibility();
       }
     });
+
+    uimanager.onLoadingShow.subscribe(() => {
+      if (!config.hidden) {
+        this.show();
+      }
+    });
   }
 }
