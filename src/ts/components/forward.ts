@@ -4,7 +4,7 @@ import { UIInstanceManager } from '../uimanager';
 import { TIME_TO_WAIT_SEEK } from './constants';
 declare const window: any;
 export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
-  private lastTimeFoward = 0;
+  private lastTimeForward = 0;
   constructor(config: ToggleButtonConfig = {}) {
     super(config);
 
@@ -39,9 +39,9 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
       });
       this.onClick.subscribe(() => {
         const currDateTime = new Date().getTime();
-        const diff = currDateTime - this.lastTimeFoward;
+        const diff = currDateTime - this.lastTimeForward;
         if (diff > TIME_TO_WAIT_SEEK) {
-          this.lastTimeFoward = currDateTime;
+          this.lastTimeForward = currDateTime;
 
           const duration = player.getDuration();
           const currentTime = player.getCurrentTime();
