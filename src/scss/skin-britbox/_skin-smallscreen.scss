@@ -149,6 +149,9 @@
         }
         &.back {
           z-index: 6;
+          width: 40px;
+          display: block;
+          flex: none;
         }
       }
     }
