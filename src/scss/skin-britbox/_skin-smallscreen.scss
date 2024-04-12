@@ -25,7 +25,6 @@
   }
   .#{$prefix}-ui-chromecast {
     @extend %ui-button;
-
     background-image: url('../../assets/skin-britbox/images/chromecast.svg');
 
     &.#{$prefix}-disabled {
@@ -61,7 +60,6 @@
       background-size: cover;
       background-color: transparent;
       position: relative;
-      z-index: 2;
       > span {
         display: none;
       }
