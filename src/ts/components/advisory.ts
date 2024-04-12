@@ -43,16 +43,15 @@ export class Advisory extends Container<AdvisoryConfig> {
       this.hide();
     });
 
-    let firstPlay = true;
-
     let init = () => {
       overlayShowTimeout.start();
       overlayHideTimeout.start();
-      firstPlay = false;
     };
 
-    uimanager.getConfig().events.onUpdated.subscribe(() => {
-      init();
+    uimanager.onLoadingHide.subscribe(() => {
+      new Timeout(1000, () => {
+        init();
+      }).start();
     });
 
     uimanager.onLoadingShow.subscribe(() => {

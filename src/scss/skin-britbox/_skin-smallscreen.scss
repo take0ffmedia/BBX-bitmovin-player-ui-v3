@@ -502,6 +502,12 @@
         display: block;
       }
     }
+    &:not(.#{$prefix}-hidden) ~ .#{$prefix}-britbox-controls {
+      opacity: 0;
+    }
+    &:not(.#{$prefix}-hidden) ~ .#{$prefix}-advisory {
+      display: none;
+    }
   }
 
   .#{$prefix}-advisory {
@@ -550,6 +556,12 @@
   &.#{$prefix}-controls-shown {
     .#{$prefix}-advisory {
       display: none;
+    }
+  }
+
+  &.#{$prefix}-controls-hidden {
+    .#{$prefix}-britbox-controls {
+      opacity: 0;
     }
   }
 
