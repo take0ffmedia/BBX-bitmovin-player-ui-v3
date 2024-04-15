@@ -6,8 +6,6 @@ import Timekeeper from './timekeeper';
 
 declare const window: any;
 export class RewindButton extends ToggleButton<ToggleButtonConfig> {
-  private lastTimeRewind = 0;
-
   constructor(config: ToggleButtonConfig = {}) {
     super(config);
 
@@ -23,13 +21,12 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
     super.configure(player, uimanager);
     const forwardButton = this;
 
-    const turnOffButton = () => {
-      if (forwardButton.isOn()) {
-        forwardButton.off();
-        setTimeout(() => {
-          forwardButton.on();
-        }, TIME_TO_WAIT_SEEK);
-      }
+    const toggleWithTimeout = () => {
+      forwardButton.off();
+      const time = setTimeout(() => {
+        forwardButton.on();
+        clearTimeout(time);
+      }, TIME_TO_WAIT_SEEK);
     };
 
     if (window.bitmovin.customMessageHandler) {
@@ -44,6 +41,7 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
       this.onClick.subscribe(() => {
         const timekeeper = Timekeeper.getInstance();
         if (timekeeper.isAvailable()) {
+          toggleWithTimeout();
           const currentTime = player.getCurrentTime();
           player.seek(Math.max(0, currentTime - INTERVAL_SEEK));
 
@@ -54,7 +52,7 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
       });
     }
     uimanager.onSeeked.subscribe(() => {
-      turnOffButton();
+      toggleWithTimeout();
     });
   }
 }

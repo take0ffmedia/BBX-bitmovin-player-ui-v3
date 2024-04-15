@@ -21,13 +21,12 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
     super.configure(player, uimanager);
     const forwardButton = this;
 
-    const turnOffButton = () => {
-      if (forwardButton.isOn()) {
-        forwardButton.off();
-        setTimeout(() => {
-          forwardButton.on();
-        }, TIME_TO_WAIT_SEEK);
-      }
+    const toggleWithTimeout = () => {
+      forwardButton.off();
+      const time = setTimeout(() => {
+        forwardButton.on();
+        clearTimeout(time);
+      }, TIME_TO_WAIT_SEEK);
     };
 
     if (window.bitmovin.customMessageHandler) {
@@ -44,7 +43,7 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
           const duration = player.getDuration();
           const currentTime = player.getCurrentTime();
           player.seek(Math.min(duration, currentTime + INTERVAL_SEEK));
-          turnOffButton();
+          toggleWithTimeout();
           let result = window.bitmovin.customMessageHandler.sendSynchronous('forwardButton');
           window.bitmovin.customMessageHandler.sendAsynchronous('forwardButtonAsync');
         }
@@ -52,13 +51,7 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
     }
 
     uimanager.onSeeked.subscribe(() => {
-      turnOffButton();
-    });
-    uimanager.onSeek.subscribe(() => {
-      turnOffButton();
-    });
-    uimanager.onSeekPreview.subscribe(() => {
-      turnOffButton();
+      toggleWithTimeout();
     });
   }
 }
