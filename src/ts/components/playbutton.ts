@@ -1,6 +1,7 @@
 import { ToggleButton, ToggleButtonConfig } from './togglebutton';
 import { PlayerAPI } from 'bitmovin-player';
 import { UIInstanceManager } from '../uimanager';
+import Timekeeper from './timekeeper';
 
 export class PlayButton extends ToggleButton<ToggleButtonConfig> {
   constructor(config: ToggleButtonConfig = {}) {
@@ -23,6 +24,8 @@ export class PlayButton extends ToggleButton<ToggleButtonConfig> {
       } else {
         player.play('ui');
       }
+      const timekeeper = Timekeeper.getInstance();
+      timekeeper.updateLastTime();
     });
 
     player.on(player.exports.PlayerEvent.Play, () => {

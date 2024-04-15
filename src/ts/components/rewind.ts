@@ -1,10 +1,10 @@
 import { ToggleButton, ToggleButtonConfig } from './togglebutton';
 import { PlayerAPI } from 'bitmovin-player';
 import { UIInstanceManager } from '../uimanager';
-import { TIME_TO_WAIT_SEEK } from './constants';
+import { INTERVAL_SEEK, TIME_TO_WAIT_SEEK } from './constants';
+import Timekeeper from './timekeeper';
 
 declare const window: any;
-
 export class RewindButton extends ToggleButton<ToggleButtonConfig> {
   private lastTimeRewind = 0;
 
@@ -42,14 +42,11 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
       });
 
       this.onClick.subscribe(() => {
-        const currDateTime = new Date().getTime();
-        const diff = currDateTime - this.lastTimeRewind;
-        if (diff > TIME_TO_WAIT_SEEK) {
+        const timekeeper = Timekeeper.getInstance();
+        if (timekeeper.isAvailable()) {
           const currentTime = player.getCurrentTime();
-          const newTime = currentTime - 10;
-          if (newTime > 0) {
-            player.seek(newTime);
-          }
+          player.seek(Math.max(0, currentTime - INTERVAL_SEEK));
+
           let result = window.bitmovin.customMessageHandler.sendSynchronous('rewindButton');
           console.log('Return value from native:', result);
           window.bitmovin.customMessageHandler.sendAsynchronous('rewindButtonAsync');

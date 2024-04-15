@@ -20,6 +20,7 @@ import { i18n } from '../localization/i18n';
 import { BrowserUtils } from '../browserutils';
 import { TimelineMarkersHandler } from './timelinemarkershandler';
 import { getMinBufferLevel } from './seekbarbufferlevel';
+import Timekeeper from './timekeeper';
 
 /**
  * Configuration interface for the {@link SeekBar} component.
@@ -540,7 +541,9 @@ export class SeekBar extends Component<SeekBarConfig> {
     if (this.player.isLive()) {
       this.player.timeShift(targetPlaybackPosition, 'ui');
     } else {
+      const timekeeper = Timekeeper.getInstance();
       this.player.seek(targetPlaybackPosition, 'ui');
+      timekeeper.updateLastTime();
     }
   };
 
