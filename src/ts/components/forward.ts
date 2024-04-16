@@ -1,10 +1,11 @@
 import { ToggleButton, ToggleButtonConfig } from './togglebutton';
 import { PlayerAPI } from 'bitmovin-player';
 import { UIInstanceManager } from '../uimanager';
-import { TIME_TO_WAIT_SEEK } from './constants';
+import { INTERVAL_SEEK, TIME_TO_WAIT_SEEK } from './constants';
+import Timekeeper from './timekeeper';
 declare const window: any;
+
 export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
-  private lastTimeForward = 0;
   constructor(config: ToggleButtonConfig = {}) {
     super(config);
 
@@ -20,13 +21,12 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
     super.configure(player, uimanager);
     const forwardButton = this;
 
-    const turnOffButton = () => {
-      if (forwardButton.isOn()) {
-        forwardButton.off();
-        setTimeout(() => {
-          forwardButton.on();
-        }, TIME_TO_WAIT_SEEK);
-      }
+    const toggleWithTimeout = () => {
+      forwardButton.off();
+      const time = setTimeout(() => {
+        forwardButton.on();
+        clearTimeout(time);
+      }, TIME_TO_WAIT_SEEK);
     };
 
     if (window.bitmovin.customMessageHandler) {
@@ -38,27 +38,20 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
         }
       });
       this.onClick.subscribe(() => {
-        const currDateTime = new Date().getTime();
-        const diff = currDateTime - this.lastTimeForward;
-        if (diff > TIME_TO_WAIT_SEEK) {
-          this.lastTimeForward = currDateTime;
-
+        const timekeeper = Timekeeper.getInstance();
+        if (timekeeper.isAvailable()) {
           const duration = player.getDuration();
           const currentTime = player.getCurrentTime();
-          const newTime = currentTime + 10;
-          if (newTime < duration) {
-            player.seek(newTime);
-            turnOffButton();
-          }
+          player.seek(Math.min(duration, currentTime + INTERVAL_SEEK));
+          toggleWithTimeout();
           let result = window.bitmovin.customMessageHandler.sendSynchronous('forwardButton');
-          console.log('Return value from native:', result);
           window.bitmovin.customMessageHandler.sendAsynchronous('forwardButtonAsync');
         }
       });
     }
 
     uimanager.onSeeked.subscribe(() => {
-      turnOffButton();
+      toggleWithTimeout();
     });
   }
 }
