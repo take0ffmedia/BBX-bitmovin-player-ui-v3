@@ -1,11 +1,13 @@
 import { ToggleButton, ToggleButtonConfig } from './togglebutton';
 import { PlayerAPI } from 'bitmovin-player';
 import { UIInstanceManager } from '../uimanager';
-import { INTERVAL_SEEK, TIME_TO_WAIT_SEEK } from './constants';
-import Timekeeper from './timekeeper';
+import { TIME_TO_WAIT_SEEK } from './constants';
 
 declare const window: any;
+
 export class RewindButton extends ToggleButton<ToggleButtonConfig> {
+  private lastTimeRewind = 0;
+
   constructor(config: ToggleButtonConfig = {}) {
     super(config);
 
@@ -21,12 +23,13 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
     super.configure(player, uimanager);
     const forwardButton = this;
 
-    const toggleWithTimeout = () => {
-      forwardButton.off();
-      const time = setTimeout(() => {
-        forwardButton.on();
-        clearTimeout(time);
-      }, TIME_TO_WAIT_SEEK);
+    const turnOffButton = () => {
+      if (forwardButton.isOn()) {
+        forwardButton.off();
+        setTimeout(() => {
+          forwardButton.on();
+        }, TIME_TO_WAIT_SEEK);
+      }
     };
 
     if (window.bitmovin.customMessageHandler) {
@@ -39,12 +42,14 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
       });
 
       this.onClick.subscribe(() => {
-        const timekeeper = Timekeeper.getInstance();
-        if (timekeeper.isAvailable()) {
-          toggleWithTimeout();
+        const currDateTime = new Date().getTime();
+        const diff = currDateTime - this.lastTimeRewind;
+        if (diff > TIME_TO_WAIT_SEEK) {
           const currentTime = player.getCurrentTime();
-          player.seek(Math.max(0, currentTime - INTERVAL_SEEK));
-
+          const newTime = currentTime - 10;
+          if (newTime > 0) {
+            player.seek(newTime);
+          }
           let result = window.bitmovin.customMessageHandler.sendSynchronous('rewindButton');
           console.log('Return value from native:', result);
           window.bitmovin.customMessageHandler.sendAsynchronous('rewindButtonAsync');
@@ -52,7 +57,7 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
       });
     }
     uimanager.onSeeked.subscribe(() => {
-      toggleWithTimeout();
+      turnOffButton();
     });
   }
 }
