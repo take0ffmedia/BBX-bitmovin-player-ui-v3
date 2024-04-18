@@ -29,8 +29,6 @@ export class CustomCloseButton extends ToggleButton<ToggleButtonConfig> {
       });
 
       this.onClick.subscribe(() => {
-        let result = window.bitmovin.customMessageHandler.sendSynchronous('closePlayer');
-        console.log('Return value from native:', result);
         window.bitmovin.customMessageHandler.sendAsynchronous('closePlayerAsync');
       });
     }

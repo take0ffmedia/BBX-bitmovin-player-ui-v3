@@ -40,8 +40,7 @@ export class ChromecastButton extends ToggleButton<ToggleButtonConfig> {
         if (player.isPlaying()) {
           player.pause();
         }
-        let result = window.bitmovin.customMessageHandler.sendSynchronous('chromecast');
-        console.log('Return value from native:', result);
+
         window.bitmovin.customMessageHandler.sendAsynchronous('chromecastAsync');
       });
     }

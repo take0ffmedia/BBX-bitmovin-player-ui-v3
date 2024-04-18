@@ -44,7 +44,6 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
           const currentTime = player.getCurrentTime();
           player.seek(Math.min(duration, currentTime + INTERVAL_SEEK));
           toggleWithTimeout();
-          let result = window.bitmovin.customMessageHandler.sendSynchronous('forwardButton');
           window.bitmovin.customMessageHandler.sendAsynchronous('forwardButtonAsync');
         }
       });
