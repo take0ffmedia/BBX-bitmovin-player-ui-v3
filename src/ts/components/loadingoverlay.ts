@@ -22,6 +22,8 @@ export interface LoadingOverlayConfig extends ContainerConfig {
  */
 export class LoadingOverlay extends Container<LoadingOverlayConfig> {
   private indicator: Component<ComponentConfig>;
+  private onFirstTime: boolean;
+
 
   constructor(config: LoadingOverlayConfig = {}) {
     super(config);
@@ -62,10 +64,19 @@ export class LoadingOverlay extends Container<LoadingOverlayConfig> {
       this.hide();
     };
 
-    player.on(player.exports.PlayerEvent.SourceLoaded, () => {
+    let showCustomUI = () => {
       uimanager.getUI().hideLoading();
       uimanager.getUI().showUi();
-    });
+      if (!this.onFirstTime) {
+        this.onFirstTime = true;
+      }
+    };
+
+    player.on(player.exports.PlayerEvent.StallEnded, showCustomUI);
+    player.on(player.exports.PlayerEvent.SourceLoaded, showCustomUI);
+    player.on(player.exports.PlayerEvent.Playing, showCustomUI);
+    player.on(player.exports.PlayerEvent.TimeShifted, showCustomUI);
+    player.on(player.exports.PlayerEvent.SourceUnloaded, showCustomUI);
 
     uimanager.onLoadingShow.subscribe(() => {
       showOverlay();
@@ -82,8 +93,10 @@ export class LoadingOverlay extends Container<LoadingOverlayConfig> {
         uimanager.getUI().showLoading();
       });
       window.bitmovin.customMessageHandler.on('hideLoading', (data?: string) => {
-        uimanager.getUI().hideLoading();
-        uimanager.getUI().showUi();
+        if (this.onFirstTime) {
+          uimanager.getUI().hideLoading();
+          uimanager.getUI().showUi();
+        }
       });
     }
   }
