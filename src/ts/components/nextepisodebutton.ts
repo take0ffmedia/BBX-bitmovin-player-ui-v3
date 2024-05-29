@@ -54,7 +54,6 @@ export class NextEpisodeButton extends ToggleButton<ToggleButtonConfig> {
           player.pause();
         }
         uimanager.getUI().hideUi();
-        uimanager.getUI().showLoading();
         let result = window.bitmovin.customMessageHandler.sendSynchronous('nextEpisode');
         console.log('Return value from native:', result);
         window.bitmovin.customMessageHandler.sendAsynchronous('nextEpisodeAsync');

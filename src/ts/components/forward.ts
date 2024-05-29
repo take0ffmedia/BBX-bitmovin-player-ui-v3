@@ -5,6 +5,13 @@ import { UIInstanceManager } from '../uimanager';
 declare const window: any;
 
 export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
+  private currentTime: number = 0;
+  // private timer: NodeJS.Timeout;
+
+  getCurrentTime = (player: PlayerAPI) => {
+    return this.currentTime === 0 ? player.getCurrentTime() + 10 : this.currentTime + 10;
+  }
+
   constructor(config: ToggleButtonConfig = {}) {
     super(config);
 
@@ -28,9 +35,19 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
       });
 
       this.onClick.subscribe(() => {
+        this.currentTime = this.getCurrentTime(player);
+        // clearTimeout(this.timer);
+        // this.timer = setTimeout(() => {
+        //   let result = window.bitmovin.customMessageHandler.sendSynchronous('rewindButton');
+        //   console.log('Return value from native:', result);
+        //   window.bitmovin.customMessageHandler.sendAsynchronous('rewindButtonAsync');
+        //   player.seek(this.currentTime >= player.getDuration() ? player.getDuration() : this.currentTime);
+        //   this.currentTime = 0;
+        // }, 250);
         let result = window.bitmovin.customMessageHandler.sendSynchronous('forwardButton');
         console.log('Return value from native:', result);
         window.bitmovin.customMessageHandler.sendAsynchronous('forwardButtonAsync');
+        player.seek(this.currentTime >= player.getDuration() ? player.getDuration() : this.currentTime);
       });
     }
   }
