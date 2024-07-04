@@ -32,6 +32,7 @@ import { BufferingOverlay } from './components/bufferingoverlay';
 import { PlaybackToggleOverlay } from './components/playbacktoggleoverlay';
 import { CastStatusOverlay } from './components/caststatusoverlay';
 import { TitleBar } from './components/titlebar';
+import { TitleBarVideo } from './components/titlebarvideo';
 import { RecommendationOverlay } from './components/recommendationoverlay';
 import { Watermark } from './components/watermark';
 import { ErrorMessageOverlay } from './components/errormessageoverlay';
@@ -65,6 +66,7 @@ import { SubtitleSettingsManager } from './components/subtitlesettings/subtitles
 import { SubtitleClosedCaptionsManager } from './components/subtitlesettings/subtitleclosedcaptionsmanager';
 import { CloseCaptionsListBox } from './components/subtitlesettings/closecaptionslistbox';
 import { BritboxPlaybackToggleOverlay } from './components/britboxplaybacktoggleoverlay';
+import { MetadataVideo, MetadataVideoContent } from './components/metadatavideo';
 
 export namespace UIFactory {
   export function buildDefaultUI(player: PlayerAPI, config: UIConfig = {}): UIManager {
@@ -418,7 +420,7 @@ export namespace UIFactory {
     return new UIContainer({
       components: [
         subtitleOverlay,
-        new TitleBar({
+        new TitleBarVideo({
           hidden: false,
           keepWithError: true,
           components: [
@@ -451,7 +453,7 @@ export namespace UIFactory {
           components: [new RewindButton(), new PlayButton(), new ForwardButton()],
           cssClass: 'britbox-controls',
         }),
-        new TitleBar({
+        new TitleBarVideo({
           components: [
             new Container({
               components: [],
@@ -459,9 +461,9 @@ export namespace UIFactory {
             }),
             new Container({
               components: [
-                new MetadataLabel({ content: MetadataLabelContent.Title }),
-                new MetadataLabel({
-                  content: MetadataLabelContent.Description,
+                new MetadataVideo({ content: MetadataVideoContent.Title }),
+                new MetadataVideo({
+                  content: MetadataVideoContent.Description,
                 }),
               ],
               cssClasses: ['ui-title'],
