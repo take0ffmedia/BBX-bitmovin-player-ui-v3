@@ -82,12 +82,24 @@
         display: none;
       }
     }
+  }
+  .#{$prefix}-britbox-controls {
     .#{$prefix}-ui-play {
-      &.#{$prefix}-on {
-        background-image: url('../../assets/skin-britbox/images/pause.svg');
-      }
-      &.#{$prefix}-off {
+      background-image: url('../../assets/skin-britbox/images/play.svg');
+    }
+  }
+  &.#{$prefix}-player-state-paused,
+  &.#{$prefix}-player-state-prepared {
+    .#{$prefix}-britbox-controls {
+      .#{$prefix}-ui-play {
         background-image: url('../../assets/skin-britbox/images/play.svg');
+      }
+    }
+  }
+  &.#{$prefix}-player-state-playing {
+    .#{$prefix}-britbox-controls {
+      .#{$prefix}-ui-play {
+        background-image: url('../../assets/skin-britbox/images/pause.svg');
       }
     }
   }

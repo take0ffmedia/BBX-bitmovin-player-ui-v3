@@ -25,7 +25,7 @@ export class PlayButton extends ToggleButton<ToggleButtonConfig> {
       }
     });
 
-    player.on(player.exports.PlayerEvent.Play, () => {
+    player.on(player.exports.PlayerEvent.Playing, () => {
       // Playback has really started, we can disable the flag to switch to normal toggle button handling
       this.on();
     });
