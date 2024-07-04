@@ -13,4 +13,16 @@
   .#{$prefix}-ui-seekbar {
     display: none;
   }
+  .#{$prefix}-ui-seekbar-label {
+    display: none;
+  }
+  .#{$prefix}-ui-playbacktimelabel {
+    display: none;
+  }
+  span.#{$prefix}-ui-playbacktimelabel.#{$prefix}-ui-playbacktimelabel-live {
+    display: block;
+    &.#{$prefix}-hidden {
+      display: none;
+    }
+  }
 }
