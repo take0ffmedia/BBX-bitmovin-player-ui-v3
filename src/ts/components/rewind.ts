@@ -20,7 +20,7 @@ export class RewindButton extends ToggleButton<ToggleButtonConfig> {
   }
 
   getCurrentTime = (player: PlayerAPI) => {
-    return this.currentTime === 0 ? player.getCurrentTime() - 10 : this.currentTime - 10;
+    return player.getCurrentTime() - 10;
   }
 
   configure(player: PlayerAPI, uimanager: UIInstanceManager): void {

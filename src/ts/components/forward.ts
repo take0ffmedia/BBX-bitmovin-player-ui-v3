@@ -9,7 +9,7 @@ export class ForwardButton extends ToggleButton<ToggleButtonConfig> {
   // private timer: NodeJS.Timeout;
 
   getCurrentTime = (player: PlayerAPI) => {
-    return this.currentTime === 0 ? player.getCurrentTime() + 10 : this.currentTime + 10;
+    return player.getCurrentTime() + 10;
   }
 
   constructor(config: ToggleButtonConfig = {}) {

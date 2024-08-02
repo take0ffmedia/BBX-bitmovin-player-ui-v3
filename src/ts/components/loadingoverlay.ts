@@ -77,6 +77,10 @@ export class LoadingOverlay extends Container<LoadingOverlayConfig> {
     player.on(player.exports.PlayerEvent.Playing, showCustomUI);
     player.on(player.exports.PlayerEvent.TimeShifted, showCustomUI);
     player.on(player.exports.PlayerEvent.SourceUnloaded, showCustomUI);
+    player.on(player.exports.PlayerEvent.Muted, () => {
+      uimanager.getUI().hideUi();
+      uimanager.getUI().showLoading();
+    });
 
     uimanager.onLoadingShow.subscribe(() => {
       showOverlay();

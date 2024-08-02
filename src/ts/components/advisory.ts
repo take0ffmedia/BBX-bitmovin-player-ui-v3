@@ -43,14 +43,19 @@ export class Advisory extends Container<AdvisoryConfig> {
       this.hide();
     });
 
+    let firstPlay = true;
+
     let init = () => {
       overlayShowTimeout.start();
       overlayHideTimeout.start();
+      firstPlay = false;
     };
 
     uimanager.onLoadingHide.subscribe(() => {
       new Timeout(1000, () => {
-        init();
+        if (firstPlay) {
+          init();
+        }
       }).start();
     });
 
@@ -58,6 +63,7 @@ export class Advisory extends Container<AdvisoryConfig> {
       overlayShowTimeout.clear();
       overlayHideTimeout.clear();
       this.hide();
+      firstPlay = true;
     });
   }
 }

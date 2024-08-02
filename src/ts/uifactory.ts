@@ -461,9 +461,9 @@ export namespace UIFactory {
             }),
             new Container({
               components: [
-                new MetadataVideo({ content: MetadataVideoContent.Title }),
-                new MetadataVideo({
-                  content: MetadataVideoContent.Description,
+                new MetadataLabel({ content: MetadataLabelContent.Title }),
+                new MetadataLabel({
+                  content: MetadataLabelContent.Description,
                 }),
               ],
               cssClasses: ['ui-title'],
