@@ -48,7 +48,6 @@
     transition: opacity 0.3s;
     > .#{$prefix}-container-wrapper {
       display: flex;
-      gap: 70px;
     }
     &.#{$prefix}-hidden {
       opacity: 0;
@@ -70,14 +69,14 @@
     }
     .#{$prefix}-ui-rewind {
       background-image: url('../../assets/skin-britbox/images/back-10-sec.svg');
-
+      margin-right: 70px;
       &.#{$prefix}-disabled {
         display: none;
       }
     }
     .#{$prefix}-ui-forward {
       background-image: url('../../assets/skin-britbox/images/next-10-sec.svg');
-
+      margin-left: 70px;
       &.#{$prefix}-disabled {
         display: none;
       }
